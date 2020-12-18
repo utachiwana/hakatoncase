@@ -39,7 +39,7 @@ public class NetworkUtils {
     public static Retrofit getRetrofit() {
         if (mRetrofit == null) {
             mRetrofit = new Retrofit.Builder()
-                    .baseUrl(BuildConfig.BASE_URL)
+                    .baseUrl(BuildConfig.base_url)
                     .client(getClient())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();

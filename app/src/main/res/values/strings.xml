@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Athena</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="textAuthorization">Авторизация</string>
+    <string name="textRePass">Восстановить пароль</string>
+    <string name="textLogIn">Войти</string>
+    <string name="textLogUp">Регистрация</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="textRegistration">Регистрация</string>
+    <string name="textInRegistration">Зарегистрироваться</string>
+    <string name="h2Repass">Восстановление пароля</string>
+    <string name="textRepass">Восстановить пароль</string>
+    <string name="textInputEmail">Введите почту</string>
+    <string name="textName">Имя</string>
 </resources>
