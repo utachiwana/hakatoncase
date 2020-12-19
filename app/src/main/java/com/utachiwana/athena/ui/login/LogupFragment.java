@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -41,6 +43,11 @@ public class LogupFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_logup, container, false);
+
+        ActionBar actionBar = ((LoginActivity)getActivity()).getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         mName = view.findViewById(R.id.etRegistFirstName);
         mLastName = view.findViewById(R.id.etRegistLastName);
         mEmail = view.findViewById(R.id.etRegistEmail);
@@ -108,4 +115,7 @@ public class LogupFragment extends Fragment {
         //TODO проверка полей на корректность
         return true;
     }
+
+
+
 }

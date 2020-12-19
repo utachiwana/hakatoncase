@@ -2,6 +2,7 @@ package com.utachiwana.athena.ui.login;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -31,6 +32,9 @@ public class RepassFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_repass, container, false);
+        ActionBar actionBar = ((LoginActivity)getActivity()).getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         Button buttonRepass = view.findViewById(R.id.btnRepassRepass);
         buttonRepass.setOnClickListener(new View.OnClickListener() {
             @Override

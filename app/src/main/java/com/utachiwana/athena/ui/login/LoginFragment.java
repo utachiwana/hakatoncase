@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.core.app.ServiceCompat;
 import androidx.fragment.app.Fragment;
 
@@ -40,7 +41,9 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-
+        ActionBar actionBar = ((LoginActivity)getActivity()).getSupportActionBar();
+        actionBar.setHomeButtonEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(false);
         Button loginButton = view.findViewById(R.id.btnLogin);
         TextView logupButton = view.findViewById(R.id.btnLogup);
         TextView repassButton = view.findViewById(R.id.btnRepass);

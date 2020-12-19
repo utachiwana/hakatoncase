@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.view.MenuItem;
+
 import com.utachiwana.athena.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -18,5 +20,15 @@ public class LoginActivity extends AppCompatActivity {
                     .add(R.id.container, new LoginFragment())
                     .commit();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
