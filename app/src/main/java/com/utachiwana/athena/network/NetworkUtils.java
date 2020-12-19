@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkUtils {
 
-    public static String ANDROID_ID = "android_id", SERVER_ID = "server_id";
+    public static String USER_ID = "user_id";
 
     private static OkHttpClient mClient;
     private static Retrofit mRetrofit;
@@ -29,7 +29,7 @@ public class NetworkUtils {
                 @Nullable
                 @Override
                 public Request authenticate(@Nullable Route route, Response response) throws IOException {
-                    return response.request().newBuilder().addHeader(ANDROID_ID, "").addHeader(SERVER_ID, "").build();
+                    return response.request().newBuilder().addHeader(USER_ID, "").build();
                 }
             }).build();
         }

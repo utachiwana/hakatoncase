@@ -1,9 +1,14 @@
 package com.utachiwana.athena.network;
 
 import com.google.gson.JsonObject;
+import com.utachiwana.athena.data.Post;
 import com.utachiwana.athena.data.User;
 
+import java.util.List;
+
+import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -11,13 +16,16 @@ import retrofit2.http.Query;
 public interface NetworkApi {
 
     @POST("registration")
-    JsonObject registration(@Body User body);
+    Call<JsonObject> registration(@Body User body);
+
+    @POST("test")
+    Call<JsonObject> test(@Body() String name);
 
     @GET("auth")
-    JsonObject authorization(@Query("name") String name, @Query("pass") String pass);
+    Call<JsonObject> authorization(@Query("name") String name, @Query("pass") String pass);
 
     @GET("entries")
-    JsonObject getEntries(@Query("type") String type);
+    Call<List<Post>> getPosts(@Query("filters") Boolean... args);
 
     @GET("entry")
     JsonObject getEntry(@Query("entry_id") String id);

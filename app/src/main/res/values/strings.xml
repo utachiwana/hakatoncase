@@ -13,4 +13,9 @@
     <string name="textRepass">Восстановить пароль</string>
     <string name="textInputEmail">Введите почту</string>
     <string name="textName">Имя</string>
+    <string name="posts">Объявления</string>
+    <string name="profile">Профиль</string>
+    <string name="entries">Мои занятия</string>
+    <string name="loading_error">Ошибка загрузки. Проверьте интернет подключение.</string>
+    <string name="successfully">Успешно</string>
 </resources>

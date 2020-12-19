@@ -7,21 +7,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.app.ServiceCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.JsonObject;
 import com.utachiwana.athena.AthenaApp;
 import com.utachiwana.athena.R;
+import com.utachiwana.athena.network.NetworkUtils;
+import com.utachiwana.athena.ui.menu.MenuActivity;
 
 import java.util.Objects;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class LoginFragment extends Fragment {
 
     public static final String TAG = "TAG";
+
+    EditText nameEt;
+    EditText passEt;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,20 +46,37 @@ public class LoginFragment extends Fragment {
         Button loginButton = view.findViewById(R.id.btnLogin);
         TextView logupButton = view.findViewById(R.id.btnLogup);
         TextView repassButton = view.findViewById(R.id.btnRepass);
+        nameEt = view.findViewById(R.id.etAuthName);
+        passEt = view.findViewById(R.id.etAuthPass);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
+            final String name = nameEt.getText().toString();
+            final String pass = passEt.getText().toString();
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(getActivity(), MenuActivity.class));
+                //todo убрать
+                if (true) return;
                 if (!checkField()) {
 
                 } else {
-                    if (!checkUser()) {
+                    NetworkUtils.getApi().authorization(name, pass).enqueue(new Callback<JsonObject>() {
+                        @Override
+                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                            if (response.isSuccessful()) {
+                                // TODO: 19.12.2020 входим в приложение
+                                //putExtrta
+                                startActivity(new Intent(getActivity(), MenuActivity.class));
+                            } else {
+                                // TODO: 19.12.2020 ошибка с сервера
+                            }
+                        }
 
-                    } else {
-                        // TODO: 19.12.2020 входим в приложение
-                        //putExtrta
-                        startActivity(new Intent(getActivity(), AthenaApp.class));
-                    }
+                        @Override
+                        public void onFailure(Call<JsonObject> call, Throwable t) {
+                            // TODO: 19.12.2020 ошибка запроса
+                        }
+                    });
                 }
             }
         });
@@ -58,7 +85,7 @@ public class LoginFragment extends Fragment {
         logupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogupFragment logupFragment= new LogupFragment();
+                LogupFragment logupFragment = new LogupFragment();
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, logupFragment)
                         .addToBackStack(null)
@@ -68,7 +95,7 @@ public class LoginFragment extends Fragment {
         repassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RepassFragment repassFragment= new RepassFragment();
+                RepassFragment repassFragment = new RepassFragment();
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, repassFragment)
                         .addToBackStack(null)
