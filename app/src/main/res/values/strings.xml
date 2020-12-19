@@ -20,4 +20,23 @@
     <string name="successfully">Успешно</string>
     <string name="signup">Записаться</string>
     <string name="moredetails">Подробнее</string>
+    <string name="SelectSubject">Выбрать тематики</string>
+    <string-array name="subjects">
+        <item>Математический анализ</item>
+        <item>Функциональный анализ</item>
+        <item>Программирование</item>
+        <item>История</item>
+        <item>Инжененрия</item>
+        <item>Дизайн</item>
+        <item>Графика</item>
+        <item>Черчение</item>
+        <item>Моделирование</item>
+    </string-array>
+
+    <string-array name="arrayRoles">
+        <item>Ученик</item>
+        <item>Репетитор</item>
+    </string-array>
+
 </resources>
+

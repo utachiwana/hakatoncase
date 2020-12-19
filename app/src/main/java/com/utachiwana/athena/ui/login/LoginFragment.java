@@ -68,7 +68,9 @@ public class LoginFragment extends Fragment {
                             if (response.isSuccessful()) {
                                 // TODO: 19.12.2020 входим в приложение
                                 //putExtrta
-                                startActivity(new Intent(getActivity(), MenuActivity.class));
+                                Intent intent = new Intent(getActivity(), MenuActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
                                 getActivity().finish();
                             } else {
                                 // TODO: 19.12.2020 ошибка с сервера
