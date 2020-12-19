@@ -8,7 +8,7 @@ public class User implements Serializable {
 
     @SerializedName("name")
     public String name;
-    @SerializedName("lastName")
+    @SerializedName("lastname")
     public String lastName;
     @SerializedName("email")
     public String email;

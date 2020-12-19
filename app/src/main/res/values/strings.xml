@@ -18,4 +18,6 @@
     <string name="entries">Мои занятия</string>
     <string name="loading_error">Ошибка загрузки. Проверьте интернет подключение.</string>
     <string name="successfully">Успешно</string>
+    <string name="signup">Записаться</string>
+    <string name="moredetails">Подробнее</string>
 </resources>

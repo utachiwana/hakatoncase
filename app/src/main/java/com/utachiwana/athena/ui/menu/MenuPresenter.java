@@ -1,6 +1,7 @@
 package com.utachiwana.athena.ui.menu;
 
 import com.google.gson.JsonObject;
+import com.utachiwana.athena.DataGenerator;
 import com.utachiwana.athena.network.NetworkUtils;
 
 import retrofit2.Call;
@@ -17,18 +18,8 @@ public class MenuPresenter{
 
     public void loadPosts(Boolean... args) {
         if (args == null || args.length != 3) return;
-        mView.showLoading();
-        NetworkUtils.getApi().test("request").enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                mView.hideLoading();
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                mView.showError();
-            }
-        });
+        mView.showPosts(DataGenerator.getPosts(10));
+        //mView.showLoading();
         /*NetworkUtils.getApi().getPosts(args).enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {

@@ -15,11 +15,8 @@ import retrofit2.http.Query;
 
 public interface NetworkApi {
 
-    @POST("registration")
+    @POST("user/register")
     Call<JsonObject> registration(@Body User body);
-
-    @POST("test")
-    Call<JsonObject> test(@Body() String name);
 
     @GET("auth")
     Call<JsonObject> authorization(@Query("name") String name, @Query("pass") String pass);

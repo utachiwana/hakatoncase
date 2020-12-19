@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class Post implements Serializable {
 
     @SerializedName("id")
-    private String id;
+    private int id;
 
     @SerializedName("author")
     private String author;
@@ -21,14 +21,59 @@ public class Post implements Serializable {
     @SerializedName("text")
     private String text;
 
+    @SerializedName("subject")
+    private String subject;
+
+    @SerializedName("price")
+    private String price;
+
+    @SerializedName("form")
+    private String form;
+
+    @SerializedName("duration")
+    private String duration;
+
     public Post() {
     }
 
-    public String getId() {
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public String getForm() {
+        return form;
+    }
+
+    public void setForm(String form) {
+        this.form = form;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

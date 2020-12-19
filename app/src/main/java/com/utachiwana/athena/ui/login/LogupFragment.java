@@ -80,8 +80,9 @@ public class LogupFragment extends Fragment {
                     public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                         if (response.isSuccessful()){
                             Toast.makeText(getContext(), getResources().getString(R.string.successfully), Toast.LENGTH_SHORT).show();
-                            //TODO возврат к окну авторизации
                             showLoading(false);
+                            requireActivity().getSupportFragmentManager().popBackStack();
+                            //TODO возврат к окну авторизации
                         }
                         else {
                             showLoading(false);
@@ -91,6 +92,7 @@ public class LogupFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<JsonObject> call, Throwable t) {
+                        Log.d("______", "onFailure: " + t.getMessage());
                         Toast.makeText(getContext(), getResources().getString(R.string.loading_error), Toast.LENGTH_SHORT).show();
                         showLoading(false);
                         //TODO ошибка запроса

@@ -1,5 +1,6 @@
 package com.utachiwana.athena.ui.menu.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,12 +19,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.utachiwana.athena.R;
 import com.utachiwana.athena.data.Post;
 import com.utachiwana.athena.ui.logic.PostAdapter;
+import com.utachiwana.athena.ui.logic.PostClickListener;
+import com.utachiwana.athena.ui.menu.MenuActivity;
 import com.utachiwana.athena.ui.menu.MenuPresenter;
 import com.utachiwana.athena.ui.menu.MenuView;
 
 import java.util.List;
 
-public class HomeFragment extends Fragment implements MenuView {
+public class HomeFragment extends Fragment implements MenuView, PostClickListener {
 
     RecyclerView mRecycler;
     PostAdapter mAdapter;
@@ -45,7 +48,7 @@ public class HomeFragment extends Fragment implements MenuView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecycler.setLayoutManager(new LinearLayoutManager(view.getContext(), RecyclerView.VERTICAL, false));
-        mAdapter = new PostAdapter();
+        mAdapter = new PostAdapter(this);
         mRecycler.setAdapter(mAdapter);
         mRefreshLayout.setOnRefreshListener(() -> mRefreshLayout.post(this::loadPosts));
         mPresenter = new MenuPresenter(this);
@@ -82,4 +85,21 @@ public class HomeFragment extends Fragment implements MenuView {
         mErrorView.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void signUpClicked(Post post) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("data", post);
+        Intent intent = new Intent(getContext(), MenuActivity.class);
+        intent.putExtras(bundle);
+        startActivity(new Intent(getContext(), MenuActivity.class));
+    }
+
+    @Override
+    public void moreDetailsClicked(Post post) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("data", post);
+        Intent intent = new Intent(getContext(), MenuActivity.class);
+        intent.putExtras(bundle);
+        startActivity(new Intent(getContext(), MenuActivity.class));
+    }
 }

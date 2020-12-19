@@ -28,8 +28,6 @@ import retrofit2.Response;
 
 public class LoginFragment extends Fragment {
 
-    public static final String TAG = "TAG";
-
     EditText nameEt;
     EditText passEt;
 
@@ -56,6 +54,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), MenuActivity.class));
                 //todo убрать
+                //getActivity().finish();
                 if (true) return;
                 if (!checkField()) {
 
@@ -67,6 +66,7 @@ public class LoginFragment extends Fragment {
                                 // TODO: 19.12.2020 входим в приложение
                                 //putExtrta
                                 startActivity(new Intent(getActivity(), MenuActivity.class));
+                                getActivity().finish();
                             } else {
                                 // TODO: 19.12.2020 ошибка с сервера
                             }
@@ -82,25 +82,19 @@ public class LoginFragment extends Fragment {
         });
 
         loginButton.setClickable(true);
-        logupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogupFragment logupFragment = new LogupFragment();
-                requireActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, logupFragment)
-                        .addToBackStack(null)
-                        .commit();
-            }
+        logupButton.setOnClickListener(v -> {
+            LogupFragment logupFragment = new LogupFragment();
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, logupFragment)
+                    .addToBackStack(null)
+                    .commit();
         });
-        repassButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RepassFragment repassFragment = new RepassFragment();
-                requireActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, repassFragment)
-                        .addToBackStack(null)
-                        .commit();
-            }
+        repassButton.setOnClickListener(v -> {
+            RepassFragment repassFragment = new RepassFragment();
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, repassFragment)
+                    .addToBackStack(null)
+                    .commit();
         });
         return view;
     }

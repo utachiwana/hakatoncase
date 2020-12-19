@@ -13,7 +13,7 @@ import com.utachiwana.athena.ui.menu.home.HomeFragment;
 
 import java.util.List;
 
-public class MenuActivity extends FragmentActivity {
+public class MenuActivity extends AppCompatActivity {
 
     BottomNavigationView mBottomBar;
 
