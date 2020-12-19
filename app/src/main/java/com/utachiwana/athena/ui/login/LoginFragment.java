@@ -35,7 +35,7 @@ public class LoginFragment extends Fragment {
 
         Button loginButton = view.findViewById(R.id.btnLogin);
         TextView logupButton = view.findViewById(R.id.btnLogup);
-        Button repassButton = view.findViewById(R.id.btnRepass);
+        TextView repassButton = view.findViewById(R.id.btnRepass);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
