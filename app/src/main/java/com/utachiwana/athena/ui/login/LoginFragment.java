@@ -53,45 +53,26 @@ public class LoginFragment extends Fragment {
         nameEt = view.findViewById(R.id.etAuthName);
         passEt = view.findViewById(R.id.etAuthPass);
 
-        ActionBar actionBar = ((LoginActivity) getActivity()).getSupportActionBar();
-        actionBar.setHomeButtonEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-
         loginButton.setOnClickListener(v -> {
             final String name = nameEt.getText().toString();
             final String pass = passEt.getText().toString();
             if (!checkField()) {
 
-                } else {
-                    NetworkUtils.getApi().authorization(name, pass).enqueue(new Callback<JsonObject>() {
-                        @Override
-                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                            if (response.isSuccessful()) {
-                                // TODO: 19.12.2020 входим в приложение
-                                //putExtrta
-                                Intent intent = new Intent(getActivity(), MenuActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                                getActivity().finish();
-                            } else {
-                                // TODO: 19.12.2020 ошибка с сервера
-                            }
-                        }
             } else {
                 NetworkUtils.getApi().authorization(name, pass).enqueue(new Callback<JsonObject>() {
                     @Override
                     public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                         Log.d("______", "onResponse: " + response.code());
-                        if (response.isSuccessful()) {
+                        /*if (response.isSuccessful()) {
                             // TODO: 19.12.2020 входим в приложение
                             //putExtrta
                             Prefs.setToken(response.body().get("token").toString());
-                            NetworkUtils.setClient();
+                            NetworkUtils.setClient();*/
                             startActivity(new Intent(getActivity(), MenuActivity.class));
                             getActivity().finish();
-                        } else {
+                        /*} else {
                             // TODO: 19.12.2020 ошибка с сервера
-                        }
+                        }*/
                     }
 
                     @Override
@@ -102,7 +83,6 @@ public class LoginFragment extends Fragment {
                 });
             }
         });
-
         loginButton.setClickable(true);
         logupButton.setOnClickListener(v -> {
             LogupFragment logupFragment = new LogupFragment();
@@ -131,9 +111,11 @@ public class LoginFragment extends Fragment {
         return false;
     }
 
+
     @Override
     public void onStart() {
         super.onStart();
 
     }
 }
+

@@ -51,7 +51,6 @@ public class MenuActivity extends AppCompatActivity {
                                 .addToBackStack(null)
                                 .commit();*/
                         getSupportFragmentManager().popBackStack();
-
                         break;
                 }
 

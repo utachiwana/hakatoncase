@@ -22,7 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="@dimen/marginProfile"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="@dimen/marginProfile"
         android:stretchColumns="true"
         app:layout_constraintBottom_toBottomOf="@+id/ivProfileAvatar"
