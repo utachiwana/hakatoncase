@@ -1,0 +1,281 @@
+Index: app/src/main/java/com/utachiwana/athena/DataGenerator.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.utachiwana.athena;\r\n\r\nimport com.utachiwana.athena.data.Post;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.Random;\r\n\r\npublic class DataGenerator {\r\n\r\n    public static List<Post> getPosts(int count) {\r\n        List<Post> list = new ArrayList<>(count);\r\n        for (int i = 0; i < count; i++) {\r\n            Post post = new Post();\r\n            post.setAuthor(\"author\");\r\n            post.setId(i);\r\n            post.setText(\"message\");\r\n            post.setType(\"kek\");\r\n            post.setForm(\"очно\");\r\n            post.setPrice(\"2000/hour\");\r\n            post.setSubject(\"Программирование\");\r\n            post.setTime(\"вт \" + new Random().nextInt());\r\n            list.add(post);\r\n        }\r\n        return list;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/utachiwana/athena/DataGenerator.java	(revision e9f518418aa725adb1fe20adde9139712faa9342)
++++ app/src/main/java/com/utachiwana/athena/DataGenerator.java	(date 1608362887568)
+@@ -17,7 +17,8 @@
+             post.setText("message");
+             post.setType("kek");
+             post.setForm("очно");
+-            post.setPrice("2000/hour");
++            post.setDuration("1 hour");
++            post.setPrice("2000/занятие");
+             post.setSubject("Программирование");
+             post.setTime("вт " + new Random().nextInt());
+             list.add(post);
+Index: app/src/main/java/com/utachiwana/athena/ui/menu/home/HomeFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.utachiwana.athena.ui.menu.home;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.ProgressBar;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\nimport androidx.swiperefreshlayout.widget.SwipeRefreshLayout;\r\n\r\nimport com.utachiwana.athena.R;\r\nimport com.utachiwana.athena.data.Post;\r\nimport com.utachiwana.athena.ui.logic.PostAdapter;\r\nimport com.utachiwana.athena.ui.logic.PostClickListener;\r\nimport com.utachiwana.athena.ui.menu.MenuActivity;\r\nimport com.utachiwana.athena.ui.menu.MenuPresenter;\r\nimport com.utachiwana.athena.ui.menu.MenuView;\r\n\r\nimport java.util.List;\r\n\r\npublic class HomeFragment extends Fragment implements MenuView, PostClickListener {\r\n\r\n    RecyclerView mRecycler;\r\n    PostAdapter mAdapter;\r\n    MenuPresenter mPresenter;\r\n    TextView mErrorView;\r\n    SwipeRefreshLayout mRefreshLayout;\r\n\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        View view = inflater.inflate(R.layout.fragment_home, container, false);\r\n        mRecycler = view.findViewById(R.id.post_recycler);\r\n        mRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);\r\n        mErrorView = view.findViewById(R.id.error_view);\r\n        return view;\r\n    }\r\n\r\n    @Override\r\n    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {\r\n        super.onViewCreated(view, savedInstanceState);\r\n        mRecycler.setLayoutManager(new LinearLayoutManager(view.getContext(), RecyclerView.VERTICAL, false));\r\n        mAdapter = new PostAdapter(this);\r\n        mRecycler.setAdapter(mAdapter);\r\n        mRefreshLayout.setOnRefreshListener(() -> mRefreshLayout.post(this::loadPosts));\r\n        mPresenter = new MenuPresenter(this);\r\n        loadPosts();\r\n    }\r\n\r\n    private void loadPosts() {\r\n        mPresenter.loadPosts(false, false, true);\r\n    }\r\n\r\n    @Override\r\n    public void showPosts(List<Post> data) {\r\n        mAdapter.addData(data, true);\r\n        hideLoading();\r\n        mRecycler.setVisibility(View.VISIBLE);\r\n        mErrorView.setVisibility(View.GONE);\r\n    }\r\n\r\n    @Override\r\n    public void showLoading() {\r\n        mRefreshLayout.setRefreshing(true);\r\n        mErrorView.setVisibility(View.GONE);\r\n        mRecycler.setVisibility(View.INVISIBLE);\r\n    }\r\n\r\n    @Override\r\n    public void hideLoading() {\r\n        mRefreshLayout.setRefreshing(false);\r\n    }\r\n\r\n    @Override\r\n    public void showError() {\r\n        hideLoading();\r\n        mErrorView.setVisibility(View.VISIBLE);\r\n    }\r\n\r\n    @Override\r\n    public void signUpClicked(Post post) {\r\n        Bundle bundle = new Bundle();\r\n        bundle.putSerializable(\"data\", post);\r\n        Intent intent = new Intent(getContext(), MenuActivity.class);\r\n        intent.putExtras(bundle);\r\n        startActivity(new Intent(getContext(), MenuActivity.class));\r\n    }\r\n\r\n    @Override\r\n    public void moreDetailsClicked(Post post) {\r\n        Bundle bundle = new Bundle();\r\n        bundle.putSerializable(\"data\", post);\r\n        Intent intent = new Intent(getContext(), MenuActivity.class);\r\n        intent.putExtras(bundle);\r\n        startActivity(new Intent(getContext(), MenuActivity.class));\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/utachiwana/athena/ui/menu/home/HomeFragment.java	(revision e9f518418aa725adb1fe20adde9139712faa9342)
++++ app/src/main/java/com/utachiwana/athena/ui/menu/home/HomeFragment.java	(date 1608364032868)
+@@ -91,15 +91,15 @@
+         bundle.putSerializable("data", post);
+         Intent intent = new Intent(getContext(), MenuActivity.class);
+         intent.putExtras(bundle);
+-        startActivity(new Intent(getContext(), MenuActivity.class));
++        startActivity(intent);
+     }
+ 
+     @Override
+     public void moreDetailsClicked(Post post) {
+         Bundle bundle = new Bundle();
+         bundle.putSerializable("data", post);
+-        Intent intent = new Intent(getContext(), MenuActivity.class);
++        Intent intent = new Intent(getContext(), PostDetailsActivity.class);
+         intent.putExtras(bundle);
+-        startActivity(new Intent(getContext(), MenuActivity.class));
++        startActivity(intent);
+     }
+ }
+Index: app/src/main/java/com/utachiwana/athena/ui/menu/home/PostDetailsActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.utachiwana.athena.ui.menu.home;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.os.Bundle;\r\n\r\nimport com.utachiwana.athena.R;\r\n\r\npublic class PostDetailsActivity extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_post_details);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/utachiwana/athena/ui/menu/home/PostDetailsActivity.java	(revision e9f518418aa725adb1fe20adde9139712faa9342)
++++ app/src/main/java/com/utachiwana/athena/ui/menu/home/PostDetailsActivity.java	(date 1608362842320)
+@@ -3,14 +3,39 @@
+ import androidx.appcompat.app.AppCompatActivity;
+ 
+ import android.os.Bundle;
++import android.widget.Button;
++import android.widget.TextView;
+ 
+ import com.utachiwana.athena.R;
++import com.utachiwana.athena.data.Post;
+ 
+ public class PostDetailsActivity extends AppCompatActivity {
+ 
++    TextView mForm, mType, mName, mSubject, mTime, mText, mPrice, mDuration;
++    Button mSignUpBtn;
++
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_post_details);
++        Post post = (Post) getIntent().getSerializableExtra("data");
++        mType = findViewById(R.id.details_type);
++        mTime = findViewById(R.id.details_time);
++        mName = findViewById(R.id.details_author);
++        mDuration = findViewById(R.id.details_duration);
++        mForm = findViewById(R.id.details_form);
++        mPrice = findViewById(R.id.details_price);
++        mSubject = findViewById(R.id.details_subject);
++        mText = findViewById(R.id.details_text);
++        mSignUpBtn = findViewById(R.id.details_signup_button);
++
++        mType.setText(getResources().getString(R.string.type) + ": " + post.getType());
++        mTime.setText(getResources().getString(R.string.freetime) + ":\n" + post.getTime());
++        mName.setText(getResources().getString(R.string.textName) + ": " + post.getAuthor());
++        mDuration.setText(getResources().getString(R.string.duration) + ": " + post.getDuration());
++        mForm.setText(getResources().getString(R.string.form) + ": " + post.getForm());
++        mPrice.setText(getResources().getString(R.string.price) + ": " + post.getPrice());
++        mSubject.setText(getResources().getString(R.string.subject) + ": " + post.getSubject());
++        mText.setText(getResources().getString(R.string.description) + ": " + post.getText());
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_post_details.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    tools:context=\".ui.menu.home.PostDetailsActivity\">\r\n\r\n    <ScrollView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"0dp\"\r\n        android:layout_weight=\"10\">\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/details_type\"\r\n                style=\"@style/CardTextStyle\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:textSize=\"20sp\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/details_subject\"\r\n                style=\"@style/CardTextStyle\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:textSize=\"18sp\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/details_author\"\r\n                style=\"@style/CardTextStyle\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:textSize=\"18sp\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/details_time\"\r\n                style=\"@style/CardTextStyle\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:textSize=\"18sp\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/details_form\"\r\n                style=\"@style/CardTextStyle\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:textSize=\"18sp\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/details_duration\"\r\n                style=\"@style/CardTextStyle\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:textSize=\"18sp\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/details_price\"\r\n                style=\"@style/CardTextStyle\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:textSize=\"18sp\" />\r\n\r\n        </LinearLayout>\r\n    </ScrollView>\r\n    <Button\r\n        android:id=\"@+id/details_signup_button\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"0dp\"\r\n        android:layout_weight=\"1\"\r\n        android:textSize=\"18sp\"\r\n        android:text=\"@string/signup\"/>\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_post_details.xml	(revision e9f518418aa725adb1fe20adde9139712faa9342)
++++ app/src/main/res/layout/activity_post_details.xml	(date 1608363481116)
+@@ -10,14 +10,17 @@
+     <ScrollView
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
++        android:padding="10dp"
+         android:layout_weight="10">
+ 
+         <LinearLayout
+             android:layout_width="match_parent"
+-            android:layout_height="match_parent"
++            android:layout_height="wrap_content"
+             android:orientation="vertical">
+ 
+             <TextView
++                android:layout_marginBottom="5dp"
++                android:textStyle="bold"
+                 android:id="@+id/details_type"
+                 style="@style/CardTextStyle"
+                 android:layout_width="match_parent"
+@@ -25,6 +28,7 @@
+                 android:textSize="20sp" />
+ 
+             <TextView
++                android:layout_marginBottom="5dp"
+                 android:id="@+id/details_subject"
+                 style="@style/CardTextStyle"
+                 android:layout_width="match_parent"
+@@ -32,6 +36,7 @@
+                 android:textSize="18sp" />
+ 
+             <TextView
++                android:layout_marginBottom="5dp"
+                 android:id="@+id/details_author"
+                 style="@style/CardTextStyle"
+                 android:layout_width="match_parent"
+@@ -39,6 +44,7 @@
+                 android:textSize="18sp" />
+ 
+             <TextView
++                android:layout_marginBottom="5dp"
+                 android:id="@+id/details_time"
+                 style="@style/CardTextStyle"
+                 android:layout_width="match_parent"
+@@ -46,6 +52,7 @@
+                 android:textSize="18sp" />
+ 
+             <TextView
++                android:layout_marginBottom="5dp"
+                 android:id="@+id/details_form"
+                 style="@style/CardTextStyle"
+                 android:layout_width="match_parent"
+@@ -53,6 +60,15 @@
+                 android:textSize="18sp" />
+ 
+             <TextView
++                android:layout_marginBottom="5dp"
++                android:id="@+id/details_text"
++                style="@style/CardTextStyle"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:textSize="18sp" />
++
++            <TextView
++                android:layout_marginBottom="5dp"
+                 android:id="@+id/details_duration"
+                 style="@style/CardTextStyle"
+                 android:layout_width="match_parent"
+@@ -60,6 +76,7 @@
+                 android:textSize="18sp" />
+ 
+             <TextView
++                android:layout_marginBottom="5dp"
+                 android:id="@+id/details_price"
+                 style="@style/CardTextStyle"
+                 android:layout_width="match_parent"
+@@ -67,13 +84,15 @@
+                 android:textSize="18sp" />
+ 
+         </LinearLayout>
++
+     </ScrollView>
+     <Button
++        android:layout_margin="5dp"
+         android:id="@+id/details_signup_button"
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="1"
+-        android:textSize="18sp"
++        android:textSize="16sp"
+         android:text="@string/signup"/>
+ 
+ </LinearLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/dialog_signup.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/dialog_signup.xml	(date 1608364015103)
++++ app/src/main/res/layout/dialog_signup.xml	(date 1608364015103)
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:orientation="vertical"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent">
++
++    <TextView
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:textSize="20sp"
++        android:text="@string/chosetime"
++        android:layout_gravity="center"/>
++
++    <Spinner
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:id="@+id/data_spinner"/>
++
++</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/utachiwana/athena/ui/menu/home/SignUpDialog.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/utachiwana/athena/ui/menu/home/SignUpDialog.java	(date 1608363920907)
++++ app/src/main/java/com/utachiwana/athena/ui/menu/home/SignUpDialog.java	(date 1608363920907)
+@@ -0,0 +1,23 @@
++package com.utachiwana.athena.ui.menu.home;
++
++import android.os.Bundle;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++
++import androidx.annotation.NonNull;
++import androidx.annotation.Nullable;
++import androidx.fragment.app.DialogFragment;
++
++import com.utachiwana.athena.R;
++
++public class SignUpDialog extends DialogFragment {
++
++    @Nullable
++    @Override
++    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
++        View view = inflater.inflate(R.layout.dialog_signup, container, false);
++
++        return view;
++    }
++}
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">Athena</string>\r\n    <!-- TODO: Remove or change this placeholder text -->\r\n    <string name=\"textAuthorization\">Авторизация</string>\r\n    <string name=\"textRePass\">Восстановить пароль</string>\r\n    <string name=\"textLogIn\">Войти</string>\r\n    <string name=\"textLogUp\">Регистрация</string>\r\n\r\n    <string name=\"hello_blank_fragment\">Hello blank fragment</string>\r\n    <string name=\"textRegistration\">Регистрация</string>\r\n    <string name=\"textInRegistration\">Зарегистрироваться</string>\r\n    <string name=\"h2Repass\">Восстановление пароля</string>\r\n    <string name=\"textRepass\">Восстановить пароль</string>\r\n    <string name=\"textInputEmail\">Введите почту</string>\r\n    <string name=\"textName\">Имя</string>\r\n    <string name=\"posts\">Объявления</string>\r\n    <string name=\"profile\">Профиль</string>\r\n    <string name=\"entries\">Мои занятия</string>\r\n    <string name=\"loading_error\">Ошибка загрузки. Проверьте интернет подключение.</string>\r\n    <string name=\"successfully\">Успешно</string>\r\n    <string name=\"signup\">Записаться</string>\r\n    <string name=\"moredetails\">Подробнее</string>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/strings.xml	(revision e9f518418aa725adb1fe20adde9139712faa9342)
++++ app/src/main/res/values/strings.xml	(date 1608363920911)
+@@ -20,4 +20,12 @@
+     <string name="successfully">Успешно</string>
+     <string name="signup">Записаться</string>
+     <string name="moredetails">Подробнее</string>
++    <string name="type">Тип</string>
++    <string name="freetime">Свободное время</string>
++    <string name="duration">Длительность</string>
++    <string name="form">Форма обучения</string>
++    <string name="price">Цена</string>
++    <string name="subject">Тематика</string>
++    <string name="description">Описание</string>
++    <string name="chosetime">Выберите время</string>
+ </resources>
+\ No newline at end of file

@@ -38,5 +38,13 @@
         <item>Репетитор</item>
     </string-array>
 
+    <string name="type">Тип</string>
+    <string name="freetime">Свободное время</string>
+    <string name="duration">Длительность</string>
+    <string name="form">Форма обучения</string>
+    <string name="price">Цена</string>
+    <string name="subject">Тематика</string>
+    <string name="description">Описание</string>
+    <string name="chosetime">Выберите время</string>
+    <string name="textEmail">Почта</string>
 </resources>
-

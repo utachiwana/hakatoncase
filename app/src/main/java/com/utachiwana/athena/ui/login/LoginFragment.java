@@ -18,10 +18,13 @@ import androidx.fragment.app.Fragment;
 import com.google.gson.JsonObject;
 import com.utachiwana.athena.AthenaApp;
 import com.utachiwana.athena.R;
+import com.utachiwana.athena.data.Prefs;
+import com.utachiwana.athena.data.User;
 import com.utachiwana.athena.network.NetworkUtils;
 import com.utachiwana.athena.ui.menu.MenuActivity;
 
 import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,16 +53,14 @@ public class LoginFragment extends Fragment {
         nameEt = view.findViewById(R.id.etAuthName);
         passEt = view.findViewById(R.id.etAuthPass);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        ActionBar actionBar = ((LoginActivity) getActivity()).getSupportActionBar();
+        actionBar.setHomeButtonEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+
+        loginButton.setOnClickListener(v -> {
             final String name = nameEt.getText().toString();
             final String pass = passEt.getText().toString();
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), MenuActivity.class));
-                //todo убрать
-                //getActivity().finish();
-                if (true) return;
-                if (!checkField()) {
+            if (!checkField()) {
 
                 } else {
                     NetworkUtils.getApi().authorization(name, pass).enqueue(new Callback<JsonObject>() {
@@ -76,13 +77,29 @@ public class LoginFragment extends Fragment {
                                 // TODO: 19.12.2020 ошибка с сервера
                             }
                         }
-
-                        @Override
-                        public void onFailure(Call<JsonObject> call, Throwable t) {
-                            // TODO: 19.12.2020 ошибка запроса
+            } else {
+                NetworkUtils.getApi().authorization(name, pass).enqueue(new Callback<JsonObject>() {
+                    @Override
+                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                        Log.d("______", "onResponse: " + response.code());
+                        if (response.isSuccessful()) {
+                            // TODO: 19.12.2020 входим в приложение
+                            //putExtrta
+                            Prefs.setToken(response.body().get("token").toString());
+                            NetworkUtils.setClient();
+                            startActivity(new Intent(getActivity(), MenuActivity.class));
+                            getActivity().finish();
+                        } else {
+                            // TODO: 19.12.2020 ошибка с сервера
                         }
-                    });
-                }
+                    }
+
+                    @Override
+                    public void onFailure(Call<JsonObject> call, Throwable t) {
+                        // TODO: 19.12.2020 ошибка запроса
+                        Toast.makeText(getContext(), getResources().getString(R.string.loading_error), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
@@ -106,7 +123,7 @@ public class LoginFragment extends Fragment {
 
     private boolean checkField() {
         // TODO: 19.12.2020 проверка корректности полей
-        return false;
+        return true;
     }
 
     private boolean checkUser() {
