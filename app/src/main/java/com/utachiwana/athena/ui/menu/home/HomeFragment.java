@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,8 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.gson.JsonObject;
 import com.utachiwana.athena.R;
 import com.utachiwana.athena.data.Post;
+import com.utachiwana.athena.network.NetworkUtils;
 import com.utachiwana.athena.ui.logic.PostAdapter;
 import com.utachiwana.athena.ui.logic.PostClickListener;
 import com.utachiwana.athena.ui.menu.MenuActivity;
@@ -25,6 +28,10 @@ import com.utachiwana.athena.ui.menu.MenuPresenter;
 import com.utachiwana.athena.ui.menu.MenuView;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeFragment extends Fragment implements MenuView, PostClickListener {
 
@@ -87,19 +94,44 @@ public class HomeFragment extends Fragment implements MenuView, PostClickListene
 
     @Override
     public void signUpClicked(Post post) {
+
+
+
+        //todo убрать
+
+
+
+        NetworkUtils.getApi().newFreeTime("пн", "14:00-15:00").enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Log.d("______", "onResponse: " + response.code());
+                if (response.isSuccessful()) {
+                    Toast.makeText(getContext(), "Успешно", Toast.LENGTH_SHORT).show();
+                }
+                else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.d("_______", "onFailure: " + t.getMessage());
+            }
+        });
+        SignUpDialog dialog = new SignUpDialog();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("data", post);
-        Intent intent = new Intent(getContext(), MenuActivity.class);
-        intent.putExtras(bundle);
-        startActivity(new Intent(getContext(), MenuActivity.class));
+        bundle.putStringArray("time", post.getTime().split("\n"));
+        bundle.putString("duration", post.getDuration());
+        dialog.setArguments(bundle);
+        dialog.show(requireActivity().getSupportFragmentManager(), null);
     }
 
     @Override
     public void moreDetailsClicked(Post post) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("data", post);
-        Intent intent = new Intent(getContext(), MenuActivity.class);
+        Intent intent = new Intent(getContext(), PostDetailsActivity.class);
         intent.putExtras(bundle);
-        startActivity(new Intent(getContext(), MenuActivity.class));
+        startActivity(intent);
     }
 }

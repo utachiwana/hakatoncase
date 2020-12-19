@@ -1,12 +1,17 @@
 package com.utachiwana.athena.network;
 
-import com.utachiwana.athena.BuildConfig;
+import android.util.Log;
 
+import com.utachiwana.athena.BuildConfig;
+import com.utachiwana.athena.data.Prefs;
+
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 
 import okhttp3.Authenticator;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -16,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkUtils {
 
-    public static String USER_ID = "user_id";
+    public static String USER_ID = "X-AUTH-TOKEN";
 
     private static OkHttpClient mClient;
     private static Retrofit mRetrofit;
@@ -25,15 +30,17 @@ public class NetworkUtils {
     public static OkHttpClient getClient() {
         if (mClient == null) {
             mClient = new OkHttpClient();
-            mClient = mClient.newBuilder().authenticator(new Authenticator() {
-                @Nullable
-                @Override
-                public Request authenticate(@Nullable Route route, Response response) throws IOException {
-                    return response.request().newBuilder().addHeader(USER_ID, "").build();
-                }
+            mClient.newBuilder().addInterceptor(chain -> {
+                Log.d("_______", "intercept: ");
+                Request request = chain.request().newBuilder().addHeader(USER_ID, Prefs.getToken()).build();
+                return chain.proceed(request);
             }).build();
         }
         return mClient;
+    }
+
+    public static void setClient(){
+        mClient = null;
     }
 
     public static Retrofit getRetrofit() {

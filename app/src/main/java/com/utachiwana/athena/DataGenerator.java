@@ -17,11 +17,17 @@ public class DataGenerator {
             post.setText("message");
             post.setType("kek");
             post.setForm("очно");
-            post.setPrice("2000/hour");
+            post.setDuration("1 hour");
+            post.setPrice("2000/занятие");
             post.setSubject("Программирование");
-            post.setTime("вт " + new Random().nextInt());
+            post.setTime("вт " + generateTime() + " - " +generateTime() +
+                    "\nср " + generateTime() + " - " + generateTime());
             list.add(post);
         }
         return list;
+    }
+
+    private static String generateTime() {
+        return new Random().nextInt(24) + ":00";
     }
 }

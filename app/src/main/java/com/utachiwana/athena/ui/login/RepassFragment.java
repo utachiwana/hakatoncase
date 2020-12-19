@@ -32,23 +32,22 @@ public class RepassFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_repass, container, false);
+
         ActionBar actionBar = ((LoginActivity)getActivity()).getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
         Button buttonRepass = view.findViewById(R.id.btnRepassRepass);
-        buttonRepass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!checkEmail()) {
-                    Toast.makeText(requireActivity().getApplicationContext(), "Почта не найдена", Toast.LENGTH_SHORT ).show();
-                } else {
-                    LoginFragment loginFragment = new LoginFragment();
-                    requireActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container, loginFragment)
-                            .addToBackStack(null)
-                            .commit();
-                    Toast.makeText(requireActivity().getApplicationContext(), "Письмо с новым паролем выслано на почту", Toast.LENGTH_LONG).show();
-                }
+        buttonRepass.setOnClickListener(v -> {
+            if (!checkEmail()) {
+                Toast.makeText(requireActivity().getApplicationContext(), "Почта не найдена", Toast.LENGTH_SHORT ).show();
+            } else {
+                LoginFragment loginFragment = new LoginFragment();
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, loginFragment)
+                        .addToBackStack(null)
+                        .commit();
+                Toast.makeText(requireActivity().getApplicationContext(), "Письмо с новым паролем выслано на почту", Toast.LENGTH_LONG).show();
             }
         });
         return view;

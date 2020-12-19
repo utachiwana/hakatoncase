@@ -20,4 +20,13 @@
     <string name="successfully">Успешно</string>
     <string name="signup">Записаться</string>
     <string name="moredetails">Подробнее</string>
+    <string name="type">Тип</string>
+    <string name="freetime">Свободное время</string>
+    <string name="duration">Длительность</string>
+    <string name="form">Форма обучения</string>
+    <string name="price">Цена</string>
+    <string name="subject">Тематика</string>
+    <string name="description">Описание</string>
+    <string name="chosetime">Выберите время</string>
+    <string name="textEmail">Почта</string>
 </resources>

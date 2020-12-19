@@ -10,14 +10,17 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:padding="10dp"
         android:layout_weight="10">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
+                android:layout_marginBottom="5dp"
+                android:textStyle="bold"
                 android:id="@+id/details_type"
                 style="@style/CardTextStyle"
                 android:layout_width="match_parent"
@@ -25,6 +28,7 @@
                 android:textSize="20sp" />
 
             <TextView
+                android:layout_marginBottom="5dp"
                 android:id="@+id/details_subject"
                 style="@style/CardTextStyle"
                 android:layout_width="match_parent"
@@ -32,6 +36,7 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:layout_marginBottom="5dp"
                 android:id="@+id/details_author"
                 style="@style/CardTextStyle"
                 android:layout_width="match_parent"
@@ -39,6 +44,7 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:layout_marginBottom="5dp"
                 android:id="@+id/details_time"
                 style="@style/CardTextStyle"
                 android:layout_width="match_parent"
@@ -46,6 +52,7 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:layout_marginBottom="5dp"
                 android:id="@+id/details_form"
                 style="@style/CardTextStyle"
                 android:layout_width="match_parent"
@@ -53,6 +60,15 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:layout_marginBottom="5dp"
+                android:id="@+id/details_text"
+                style="@style/CardTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_marginBottom="5dp"
                 android:id="@+id/details_duration"
                 style="@style/CardTextStyle"
                 android:layout_width="match_parent"
@@ -60,6 +76,7 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:layout_marginBottom="5dp"
                 android:id="@+id/details_price"
                 style="@style/CardTextStyle"
                 android:layout_width="match_parent"
@@ -67,13 +84,15 @@
                 android:textSize="18sp" />
 
         </LinearLayout>
+
     </ScrollView>
     <Button
+        android:layout_margin="5dp"
         android:id="@+id/details_signup_button"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:text="@string/signup"/>
 
 </LinearLayout>
