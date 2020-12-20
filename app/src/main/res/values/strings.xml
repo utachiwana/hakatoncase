@@ -47,4 +47,5 @@
     <string name="description">Описание</string>
     <string name="chosetime">Выберите время</string>
     <string name="textEmail">Почта</string>
+    <string name="putcontacts">Оставьте контакты для связи, чтобы преподаватель с вами связался.*</string>
 </resources>

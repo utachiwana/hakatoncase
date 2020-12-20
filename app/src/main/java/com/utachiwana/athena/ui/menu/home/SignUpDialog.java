@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 
@@ -17,17 +18,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.utachiwana.athena.R;
 import com.utachiwana.athena.ui.logic.DateAdapter;
 import com.utachiwana.athena.ui.logic.TimeAdapter;
+import com.utachiwana.athena.ui.logic.TimeSelectedListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class SignUpDialog extends DialogFragment {
+public class SignUpDialog extends DialogFragment implements TimeSelectedListener {
 
     Spinner mSpinner;
     TimeAdapter mAdapter;
     RecyclerView mRecycler;
+    Button mSignUpBtn;
 
     @Nullable
     @Override
@@ -35,6 +38,7 @@ public class SignUpDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_signup, container, false);
         mSpinner = view.findViewById(R.id.date_spinner);
         mRecycler = view.findViewById(R.id.time_recycler);
+        mSignUpBtn = view.findViewById(R.id.signup_button);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         return view;
     }
@@ -42,6 +46,10 @@ public class SignUpDialog extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        mSignUpBtn.setEnabled(false);
+
         String[] dates = getArguments().getStringArray("time");
         DateAdapter adapter = new DateAdapter(getContext(), R.layout.item_spinner, R.id.date_spinner, dates);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -61,7 +69,17 @@ public class SignUpDialog extends DialogFragment {
             str+= " - " + f.format(cal.getTime());
             list.add(str);
         }
-        mAdapter = new TimeAdapter(list);
+        mAdapter = new TimeAdapter(list, this);
         mRecycler.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onTimeSelected() {
+        mSignUpBtn.setEnabled(true);
+    }
+
+    @Override
+    public void onTimeUnselected() {
+        mSignUpBtn.setEnabled(false);
     }
 }
