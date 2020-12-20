@@ -48,10 +48,11 @@
 
             <Button
                 android:id="@+id/item_left_button"
+                style="@style/myButtonAccept"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_marginStart="10dp"
-                android:background="@color/colorAccept" />
+                tools:text="hjkl" />
 
         </LinearLayout>
 

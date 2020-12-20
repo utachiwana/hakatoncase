@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.utachiwana.athena.R;
+import com.utachiwana.athena.ui.menu.home.SignUpDialog;
 
 public class ProfileFragment extends Fragment {
 
@@ -98,6 +99,16 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+
+        btnSelectTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SelectTimeDialog dialog = new SelectTimeDialog();
+                Bundle bundle = new Bundle();
+                dialog.setArguments(bundle);
+                dialog.show(requireActivity().getSupportFragmentManager(), null);
+            }
+        });
         return view;
     }
 

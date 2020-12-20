@@ -1,0 +1,336 @@
+Index: app/src/main/java/com/utachiwana/athena/ui/menu/profile/ProfileFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.utachiwana.athena.ui.menu.profile;\r\n\r\nimport android.app.AlertDialog;\r\nimport android.content.DialogInterface;\r\nimport android.os.Bundle;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Button;\r\nimport android.widget.ListView;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.google.gson.Gson;\r\nimport com.google.gson.JsonObject;\r\nimport com.utachiwana.athena.R;\r\n\r\npublic class ProfileFragment extends Fragment {\r\n\r\n    DialogTopicFragment dialogTopicFragment;\r\n    TextView textFirstName;\r\n    TextView textLastName;\r\n    TextView textEmail;\r\n    Button btnSelectTopic;\r\n    Button btnSelectTime;\r\n    Button btnRole;\r\n    ListView listTime;\r\n    int myRole;\r\n\r\n    @Override\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n    }\r\n\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container,\r\n                             Bundle savedInstanceState) {\r\n        View view = inflater.inflate(R.layout.fragment_profile, container, false);\r\n\r\n        textFirstName = view.findViewById(R.id.tvProfileFirstName);\r\n        textLastName = view.findViewById(R.id.tvProfileLastName);\r\n        textEmail = view.findViewById(R.id.tvProfileEmail);\r\n        btnSelectTopic = (Button) view.findViewById(R.id.btnProfileSelectTopic);\r\n        btnSelectTime = (Button) view.findViewById(R.id.btnProfileSelectTime);\r\n        btnRole = (Button) view.findViewById(R.id.btnProfileRole);\r\n        listTime = (ListView) view.findViewById(R.id.lvProfileListTime);\r\n\r\n        // TODO: 19.12.2020 инициализация данных пользователя\r\n        JsonObject obj = new Gson().fromJson(getArguments().getString(\"data\"), JsonObject.class);\r\n        textFirstName.setText(obj.get(\"name\").getAsString());\r\n        textLastName.setText(obj.get(\"lastname\").getAsString());\r\n        textEmail.setText(obj.get(\"email\").getAsString());\r\n        btnRole.setText(obj.get(\"role\").getAsString());\r\n        myRole = -1;\r\n\r\n        btnSelectTopic.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                dialogTopicFragment = new DialogTopicFragment();\r\n                dialogTopicFragment.show(requireActivity().getSupportFragmentManager(), \"1\");\r\n            }\r\n        });\r\n\r\n        btnRole.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                final String[] arrayRoles = getResources().getStringArray(R.array.arrayRoles);\r\n                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());\r\n                builder.setTitle(\"Хотите сменить роль?\")\r\n                        // добавляем переключатели\r\n                        .setSingleChoiceItems(arrayRoles, 0/*// TODO: тут инициализируется роль */,\r\n                                new DialogInterface.OnClickListener() {\r\n                                    @Override\r\n                                    public void onClick(DialogInterface dialog, int item) {\r\n                                        //смена роли\r\n                                        //Toast.makeText(getActivity(), \"Выбрана роль: \" + arrayRoles[item], Toast.LENGTH_SHORT).show();\r\n                                    }\r\n                                })\r\n                        .setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\r\n                            @Override\r\n                            public void onClick(DialogInterface dialog, int id) {\r\n                                // User clicked OK, so save the mSelectedItems results somewhere\r\n                                // or return them to the component that opened the dialog\r\n                                // TODO: 19.12.2020 смена роли\r\n\r\n                                Toast.makeText(getActivity(), \"Ваша роль\", Toast.LENGTH_LONG).show();\r\n                            }\r\n                        })\r\n                        .setNegativeButton(\"Отмена\", new DialogInterface.OnClickListener() {\r\n                            @Override\r\n                            public void onClick(DialogInterface dialog, int id) {\r\n                                dialog.cancel();\r\n                            }\r\n                        }).create().show();\r\n            }\r\n        });\r\n\r\n        return view;\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/utachiwana/athena/ui/menu/profile/ProfileFragment.java	(revision 2f5771ec78c883e825a7f2aeee85aaf42fc56249)
++++ app/src/main/java/com/utachiwana/athena/ui/menu/profile/ProfileFragment.java	(date 1608434838445)
+@@ -17,6 +17,7 @@
+ import com.google.gson.Gson;
+ import com.google.gson.JsonObject;
+ import com.utachiwana.athena.R;
++import com.utachiwana.athena.ui.menu.home.SignUpDialog;
+ 
+ public class ProfileFragment extends Fragment {
+ 
+@@ -98,6 +99,17 @@
+             }
+         });
+ 
++
++        btnSelectTime.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++                SelectTimeDialog dialog = new SelectTimeDialog();
++                Bundle bundle = new Bundle();
++//                bundle.putStringArray("time",);
++                dialog.setArguments(bundle);
++                dialog.show(requireActivity().getSupportFragmentManager(), null);
++            }
++        });
+         return view;
+     }
+ 
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n\r\n    <color name=\"colorOnPrimary\">#20757575</color>\r\n\r\n    <color name=\"colorPrimaryNight\">        #80009688</color>\r\n    <color name=\"colorPrimaryDarkNight\">    #8000796B</color>\r\n    <color name=\"colorPrimaryLightNight\">   #80B2DFDB</color>\r\n    <color name=\"colorAccentNight\">         #808BC34A</color>\r\n    <color name=\"navigationBarColorNight\">  #8000796B</color>\r\n\r\n    <color name=\"colorPrimary\">      #009688</color>\r\n    <color name=\"colorPrimaryDark\">  #00796B</color>\r\n    <color name=\"colorPrimaryLight\">#C5C5C5</color>\r\n    <color name=\"colorAccent\">       #8BC34A</color>\r\n    <color name=\"navigationBarColor\">#8000796B</color>\r\n\r\n\r\n    <color name=\"colorPrimaryText\">#212121</color>\r\n    <color name=\"colorSecondaryText\">#757575</color>\r\n    <color name=\"colorIcons\">#212121</color>\r\n    <color name=\"colorDivider\">#BDBDBD</color>\r\n    <color name=\"colorDanger\">#FF5252</color>\r\n\r\n    <color name=\"colorAccept\">#A0FAC6</color>\r\n    <color name=\"colorInfo\">#FDEEA0</color>\r\n\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/colors.xml	(revision 2f5771ec78c883e825a7f2aeee85aaf42fc56249)
++++ app/src/main/res/values/colors.xml	(date 1608433595984)
+@@ -22,7 +22,7 @@
+     <color name="colorDivider">#BDBDBD</color>
+     <color name="colorDanger">#FF5252</color>
+ 
+-    <color name="colorAccept">#A0FAC6</color>
++    <color name="colorAccept">#B2FFBA</color>
+     <color name="colorInfo">#FDEEA0</color>
+ 
+ </resources>
+\ No newline at end of file
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">Athena</string>\r\n    <!-- TODO: Remove or change this placeholder text -->\r\n    <string name=\"textAuthorization\">Авторизация</string>\r\n    <string name=\"textRePass\">Восстановить пароль</string>\r\n    <string name=\"textLogIn\">Войти</string>\r\n    <string name=\"textLogUp\">Регистрация</string>\r\n\r\n    <string name=\"hello_blank_fragment\">Hello blank fragment</string>\r\n    <string name=\"textRegistration\">Регистрация</string>\r\n    <string name=\"textInRegistration\">Зарегистрироваться</string>\r\n    <string name=\"h2Repass\">Восстановление пароля</string>\r\n    <string name=\"textRepass\">Восстановить пароль</string>\r\n    <string name=\"textInputEmail\">Введите почту</string>\r\n    <string name=\"textName\">Имя</string>\r\n    <string name=\"posts\">Объявления</string>\r\n    <string name=\"profile\">Профиль</string>\r\n    <string name=\"entries\">Мои занятия</string>\r\n    <string name=\"loading_error\">Ошибка загрузки. Проверьте интернет подключение.</string>\r\n    <string name=\"successfully\">Успешно</string>\r\n    <string name=\"signup\">Записаться</string>\r\n    <string name=\"moredetails\">Подробнее</string>\r\n    <string name=\"SelectSubject\">Выбрать тематики</string>\r\n    <string-array name=\"subjects\">\r\n        <item>Математический анализ</item>\r\n        <item>Функциональный анализ</item>\r\n        <item>Программирование</item>\r\n        <item>История</item>\r\n        <item>Инжененрия</item>\r\n        <item>Дизайн</item>\r\n        <item>Графика</item>\r\n        <item>Черчение</item>\r\n        <item>Моделирование</item>\r\n    </string-array>\r\n\r\n    <string-array name=\"arrayRoles\">\r\n        <item>Ученик</item>\r\n        <item>Репетитор</item>\r\n    </string-array>\r\n\r\n    <string name=\"type\">Тип</string>\r\n    <string name=\"freetime\">Свободное время</string>\r\n    <string name=\"duration\">Длительность</string>\r\n    <string name=\"form\">Форма обучения</string>\r\n    <string name=\"price\">Цена</string>\r\n    <string name=\"subject\">Тематика</string>\r\n    <string name=\"description\">Описание</string>\r\n    <string name=\"chosetime\">Выберите время</string>\r\n    <string name=\"textEmail\">Почта</string>\r\n    <string name=\"putcontacts\">Оставьте контакты для связи, чтобы преподаватель с вами связался.*</string>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/strings.xml	(revision 2f5771ec78c883e825a7f2aeee85aaf42fc56249)
++++ app/src/main/res/values/strings.xml	(date 1608436538107)
+@@ -32,6 +32,42 @@
+         <item>Черчение</item>
+         <item>Моделирование</item>
+     </string-array>
++    <string-array name="dayWeek">
++        <item>пн</item>
++        <item>вт</item>
++        <item>ср</item>
++        <item>чт</item>
++        <item>пт</item>
++        <item>сб</item>
++        <item>вс</item>
++    </string-array>
++
++    <string-array name="hours">
++        <item>0</item>
++        <item>1</item>
++        <item>2</item>
++        <item>3</item>
++        <item>4</item>
++        <item>5</item>
++        <item>6</item>
++        <item>7</item>
++        <item>8</item>
++        <item>9</item>
++        <item>10</item>
++        <item>11</item>
++        <item>12</item>
++        <item>13</item>
++        <item>14</item>
++        <item>15</item>
++        <item>16</item>
++        <item>17</item>
++        <item>18</item>
++        <item>19</item>
++        <item>20</item>
++        <item>21</item>
++        <item>22</item>
++        <item>23</item>
++    </string-array>
+ 
+     <string-array name="arrayRoles">
+         <item>Ученик</item>
+@@ -48,4 +84,5 @@
+     <string name="chosetime">Выберите время</string>
+     <string name="textEmail">Почта</string>
+     <string name="putcontacts">Оставьте контакты для связи, чтобы преподаватель с вами связался.*</string>
++    <string name="textAdd">Добавить</string>
+ </resources>
+\ No newline at end of file
+Index: app/src/main/res/layout/dialog_time_profile.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/dialog_time_profile.xml	(date 1608435761919)
++++ app/src/main/res/layout/dialog_time_profile.xml	(date 1608435761919)
+@@ -0,0 +1,81 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:orientation="vertical"
++    android:layout_width="wrap_content"
++    android:paddingVertical="10dp"
++    android:paddingHorizontal="30dp"
++    android:layout_marginVertical="100dp"
++    android:layout_height="wrap_content">
++
++    <TextView
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:textSize="24sp"
++        android:text="@string/chosetime"
++        android:layout_gravity="center"/>
++
++    <Spinner
++        android:layout_marginTop="30dp"
++        android:layout_marginBottom="10dp"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:id="@+id/date_spinner"/>
++    <LinearLayout
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:orientation="horizontal">
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="с"
++            android:layout_gravity="center"
++            android:layout_margin="5dp"
++            android:textSize="20dp"/>
++        <NumberPicker
++            android:id="@+id/hh1"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"/>
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text=":"
++            android:layout_gravity="center"
++            android:textSize="20dp"/>
++        <NumberPicker
++            android:id="@+id/mm1"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"/>
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_margin="5dp"
++            android:text="по"
++            android:layout_gravity="center"
++            android:textSize="20dp"/>
++        <NumberPicker
++            android:id="@+id/hh2"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"/>
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text=":"
++            android:layout_gravity="center"
++            android:textSize="20dp"/>
++        <NumberPicker
++            android:id="@+id/mm2"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"/>
++    </LinearLayout>
++    <Button
++        android:id="@+id/signup_button"
++        android:layout_marginVertical="10dp"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:textSize="16sp"
++        android:paddingVertical="5dp"
++        android:layout_gravity="center"
++        android:paddingHorizontal="20dp"
++        android:text="@string/textAdd"/>
++
++</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/utachiwana/athena/ui/menu/profile/SelectTimeDialog.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/utachiwana/athena/ui/menu/profile/SelectTimeDialog.java	(date 1608436901072)
++++ app/src/main/java/com/utachiwana/athena/ui/menu/profile/SelectTimeDialog.java	(date 1608436901072)
+@@ -0,0 +1,125 @@
++package com.utachiwana.athena.ui.menu.profile;
++
++import android.os.Bundle;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewDebug;
++import android.view.ViewGroup;
++import android.widget.Button;
++import android.widget.NumberPicker;
++import android.widget.Spinner;
++
++import androidx.annotation.NonNull;
++import androidx.annotation.Nullable;
++import androidx.fragment.app.DialogFragment;
++import androidx.recyclerview.widget.LinearLayoutManager;
++import androidx.recyclerview.widget.RecyclerView;
++
++import com.utachiwana.athena.R;
++import com.utachiwana.athena.ui.logic.DateAdapter;
++import com.utachiwana.athena.ui.logic.TimeAdapter;
++import com.utachiwana.athena.ui.logic.TimeSelectedListener;
++
++import java.text.SimpleDateFormat;
++import java.util.ArrayList;
++import java.util.Calendar;
++import java.util.List;
++
++public class SelectTimeDialog extends DialogFragment {
++
++
++    Spinner mSpinner;
++    /*TimeAdapter mAdapter;
++    RecyclerView mRecycler;*/
++    Button mSignUpBtn;
++    NumberPicker pickerHH1;
++    NumberPicker pickerMM1;
++    NumberPicker pickerHH2;
++    NumberPicker pickerMM2;
++
++    @Nullable
++    @Override
++    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
++        View view = inflater.inflate(R.layout.dialog_time_profile, container, false);
++        mSpinner = view.findViewById(R.id.date_spinner);
++        /*mRecycler = view.findViewById(R.id.time_recycler);
++        mRecycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));*/
++
++        //***
++
++        pickerHH1 = view.findViewById(R.id.hh1);
++        pickerMM1 = view.findViewById(R.id.mm1);
++        pickerHH2 = view.findViewById(R.id.hh2);
++        pickerMM2 = view.findViewById(R.id.mm2);
++
++        //***
++        mSignUpBtn = view.findViewById(R.id.signup_button);
++
++        mSignUpBtn.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++                int valuePickerHH1 = pickerHH1.getValue();
++                int valuePickerMM1 = pickerMM1.getValue();
++                int valuePickerHH2 = pickerHH2.getValue();
++                int valuePickerMM2 = pickerMM2.getValue();
++
++            }
++        });
++        return view;
++    }
++
++    @Override
++    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
++        super.onViewCreated(view, savedInstanceState);
++
++
++//        mSignUpBtn.setEnabled(false);
++        pickerHH1.setMinValue(0);
++        pickerHH1.setMaxValue(23);
++        pickerMM1.setMinValue(0);
++        pickerMM1.setMaxValue(59);
++
++        pickerHH2.setMinValue(0);
++        pickerHH2.setMaxValue(23);
++        pickerMM2.setMinValue(0);
++        pickerMM2.setMaxValue(59);
++
++        String[] hours = getResources().getStringArray(R.array.hours);
++        String[] min = new String[60];
++        for (int i = 0; i < 60; i++) {
++            min[i] = String.valueOf(i);
++        }
++
++        pickerHH1.setDisplayedValues(hours);
++        pickerMM1.setDisplayedValues(min);
++        pickerHH2.setDisplayedValues(hours);
++        pickerMM2.setDisplayedValues(min);
++
++
++        String[] dates = getResources().getStringArray(R.array.dayWeek);
++        DateAdapter adapter = new DateAdapter(getContext(), R.layout.item_spinner, R.id.date_spinner, dates);
++        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
++        mSpinner.setAdapter(adapter);
++
++
++
++/*        double duration = Double.parseDouble(getArguments().getString("duration").split(" ")[0]);
++        Integer startHour = Integer.parseInt(dates[0].split(" ")[1].split(":")[0]);
++        Integer endHour = Integer.parseInt(dates[0].split(" ")[3].split(":")[0]);
++        Calendar cal = Calendar.getInstance();
++//        List<String> list = new ArrayList<>();
++//        SimpleDateFormat f = new SimpleDateFormat("HH:mm");
++        cal.set(Calendar.MINUTE, 0);
++        for (int i = startHour; i <= endHour - duration; i++) {
++            cal.set(Calendar.HOUR_OF_DAY, i);
++            String str = f.format(cal.getTime());
++            cal.set(Calendar.HOUR_OF_DAY, (int) (i + Math.floor(duration)));
++            str+= " - " + f.format(cal.getTime());
++            list.add(str);
++        }
++        mAdapter = new TimeAdapter(list, this);
++        mRecycler.setAdapter(mAdapter);*/
++    }
++
++
++}

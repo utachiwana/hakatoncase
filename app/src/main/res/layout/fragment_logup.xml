@@ -4,22 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.login.LoginActivity"
-    android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+    tools:context=".ui.login.LoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:padding="10dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|center"
+            android:layout_marginTop="5dp"
             android:text="@string/textRegistration"
             android:textSize="@dimen/h2"
-            android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -88,11 +88,12 @@
 
         <Button
             android:id="@+id/btnRegistRegistration"
+            style="@style/myButtonAcceptRadius"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="@string/textInRegistration"
             android:textAllCaps="false"
-            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etRegistPass2" />
@@ -100,18 +101,18 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
-        android:visibility="gone"
-        android:alpha="0.3"
-        android:background="@android:color/black"
+        android:id="@+id/disableScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/disableScreen"/>
+        android:alpha="0.3"
+        android:background="@android:color/black"
+        android:visibility="gone" />
 
     <ProgressBar
-        android:visibility="gone"
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
 </FrameLayout>

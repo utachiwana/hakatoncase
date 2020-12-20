@@ -53,6 +53,7 @@
         android:paddingVertical="5dp"
         android:layout_gravity="center"
         android:paddingHorizontal="20dp"
+        style="@style/myButtonAcceptRadius"
         android:text="@string/signup"/>
 
 </LinearLayout>
