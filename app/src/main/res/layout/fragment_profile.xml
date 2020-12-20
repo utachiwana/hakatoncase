@@ -13,7 +13,7 @@
         android:layout_height="120dp"
         android:layout_marginStart="@dimen/marginProfile"
         android:layout_marginTop="@dimen/marginProfile"
-        android:background="@drawable/ic_profile"
+        android:background="@drawable/ic_avatar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,16 +81,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnProfileRole" />
 
-    <ListView
-        android:id="@+id/lvProfileListTime"
+    <FrameLayout
+        android:id="@+id/flProfileListTime"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="@dimen/marginProfile"
-        android:background="#DFDFDF"
+        android:background="#DADADA"
         app:layout_constraintBottom_toTopOf="@+id/btnProfileSelectTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnProfileSelectTopic" />
+        app:layout_constraintTop_toBottomOf="@+id/btnProfileSelectTopic">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_baseline_access_time_24"
+            />
+
+        <ListView
+            android:id="@+id/lvProfileListTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </FrameLayout>
 
     <Button
         android:id="@+id/btnProfileSelectTime"

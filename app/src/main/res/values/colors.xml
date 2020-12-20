@@ -22,6 +22,7 @@
     <color name="colorDivider">#BDBDBD</color>
     <color name="colorDanger">#FF5252</color>
 
-    <color name="colorAccept">#D9FFAD</color>
+    <color name="colorAccept">#A0FAC6</color>
+    <color name="colorInfo">#FDEEA0</color>
 
 </resources>

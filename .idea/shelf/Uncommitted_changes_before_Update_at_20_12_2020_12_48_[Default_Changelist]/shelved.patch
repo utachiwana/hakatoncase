@@ -1,0 +1,291 @@
+Index: app/src/main/java/com/utachiwana/athena/ui/menu/profile/ProfileFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.utachiwana.athena.ui.menu.profile;\r\n\r\nimport android.app.AlertDialog;\r\nimport android.content.DialogInterface;\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Button;\r\nimport android.widget.ListView;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.utachiwana.athena.R;\r\n\r\npublic class ProfileFragment extends Fragment {\r\n\r\n    DialogTopicFragment dialogTopicFragment;\r\n    TextView textFirstName;\r\n    TextView textLastName;\r\n    TextView textEmail;\r\n    Button btnSelectTopic;\r\n    Button btnSelectTime;\r\n    Button btnRole;\r\n    ListView listTime;\r\n    int myRole;\r\n\r\n    @Override\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n    }\r\n\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container,\r\n                             Bundle savedInstanceState) {\r\n        View view = inflater.inflate(R.layout.fragment_profile, container, false);\r\n\r\n        textFirstName = view.findViewById(R.id.tvProfileFirstName);\r\n        textLastName = view.findViewById(R.id.tvProfileLastName);\r\n        textEmail = view.findViewById(R.id.tvProfileEmail);\r\n        btnSelectTopic = (Button) view.findViewById(R.id.btnProfileSelectTopic);\r\n        btnSelectTime = (Button) view.findViewById(R.id.btnProfileSelectTime);\r\n        btnRole = (Button) view.findViewById(R.id.btnProfileRole);\r\n        listTime = (ListView) view.findViewById(R.id.lvProfileListTime);\r\n\r\n        // TODO: 19.12.2020 инициализация данных пользователя\r\n        textFirstName.setText(\"Вася\");\r\n        textLastName.setText(\"Пупкин\");\r\n        textEmail.setText(\"vasa@ya.ru\");\r\n        myRole = -1;\r\n\r\n        btnSelectTopic.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                dialogTopicFragment = new DialogTopicFragment();\r\n                dialogTopicFragment.show(requireActivity().getSupportFragmentManager(), \"1\");\r\n            }\r\n        });\r\n\r\n        btnRole.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                final String[] arrayRoles = getResources().getStringArray(R.array.arrayRoles);\r\n                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());\r\n                builder.setTitle(\"Хотите сменить роль?\")\r\n                        // добавляем переключатели\r\n                        .setSingleChoiceItems(arrayRoles, 0/*// TODO: тут инициализируется роль */,\r\n                                new DialogInterface.OnClickListener() {\r\n                                    @Override\r\n                                    public void onClick(DialogInterface dialog, int item) {\r\n                                        //смена роли\r\n                                        //Toast.makeText(getActivity(), \"Выбрана роль: \" + arrayRoles[item], Toast.LENGTH_SHORT).show();\r\n                                    }\r\n                                })\r\n                        .setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\r\n                            @Override\r\n                            public void onClick(DialogInterface dialog, int id) {\r\n                                // User clicked OK, so save the mSelectedItems results somewhere\r\n                                // or return them to the component that opened the dialog\r\n                                // TODO: 19.12.2020 смена роли\r\n\r\n                                Toast.makeText(getActivity(), \"Ваша роль\", Toast.LENGTH_LONG).show();\r\n                            }\r\n                        })\r\n                        .setNegativeButton(\"Отмена\", new DialogInterface.OnClickListener() {\r\n                            @Override\r\n                            public void onClick(DialogInterface dialog, int id) {\r\n                                dialog.cancel();\r\n                            }\r\n                        }).create().show();\r\n            }\r\n        });\r\n\r\n        return view;\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/utachiwana/athena/ui/menu/profile/ProfileFragment.java	(revision 06fa09f441b387cbc7de5d44807cc8b41945364f)
++++ app/src/main/java/com/utachiwana/athena/ui/menu/profile/ProfileFragment.java	(date 1608432235486)
+@@ -47,7 +47,7 @@
+ 
+         // TODO: 19.12.2020 инициализация данных пользователя
+         textFirstName.setText("Вася");
+-        textLastName.setText("Пупкин");
++        textLastName.setText("Петров");
+         textEmail.setText("vasa@ya.ru");
+         myRole = -1;
+ 
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n\r\n    <color name=\"colorOnPrimary\">#20757575</color>\r\n\r\n    <color name=\"colorPrimaryNight\">        #80009688</color>\r\n    <color name=\"colorPrimaryDarkNight\">    #8000796B</color>\r\n    <color name=\"colorPrimaryLightNight\">   #80B2DFDB</color>\r\n    <color name=\"colorAccentNight\">         #808BC34A</color>\r\n    <color name=\"navigationBarColorNight\">  #8000796B</color>\r\n\r\n    <color name=\"colorPrimary\">      #009688</color>\r\n    <color name=\"colorPrimaryDark\">  #00796B</color>\r\n    <color name=\"colorPrimaryLight\">#C5C5C5</color>\r\n    <color name=\"colorAccent\">       #8BC34A</color>\r\n    <color name=\"navigationBarColor\">#8000796B</color>\r\n\r\n\r\n    <color name=\"colorPrimaryText\">#212121</color>\r\n    <color name=\"colorSecondaryText\">#757575</color>\r\n    <color name=\"colorIcons\">#212121</color>\r\n    <color name=\"colorDivider\">#BDBDBD</color>\r\n    <color name=\"colorDanger\">#FF5252</color>\r\n\r\n    <color name=\"colorAccept\">#D9FFAD</color>\r\n\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/colors.xml	(revision 06fa09f441b387cbc7de5d44807cc8b41945364f)
++++ app/src/main/res/values/colors.xml	(date 1608432471792)
+@@ -22,6 +22,7 @@
+     <color name="colorDivider">#BDBDBD</color>
+     <color name="colorDanger">#FF5252</color>
+ 
+-    <color name="colorAccept">#D9FFAD</color>
++    <color name="colorAccept">#75E6A5</color>
++    <color name="colorInfo">#F8E16E</color>
+ 
+ </resources>
+\ No newline at end of file
+Index: app/src/main/res/layout/item_post_recycler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.cardview.widget.CardView android:padding=\"5dp\"\r\n    app:cardCornerRadius=\"10dp\"\r\n    app:cardElevation=\"5dp\"\r\n    android:layout_margin=\"10dp\"\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"wrap_content\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\">\r\n\r\n    <LinearLayout\r\n        android:padding=\"5dp\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"horizontal\">\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"0dp\"\r\n            android:layout_weight=\"1\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_weight=\"5\"\r\n                android:layout_height=\"0dp\"\r\n                android:orientation=\"vertical\">\r\n\r\n                <TextView\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    style=\"@style/CardTextStyle\"\r\n                    android:id=\"@+id/item_type\"/>\r\n                <TextView\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    style=\"@style/CardTextStyle\"\r\n                    android:id=\"@+id/item_subject\"/>\r\n                <TextView\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    style=\"@style/CardTextStyle\"\r\n                    android:id=\"@+id/item_name\"/>\r\n                <TextView\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    style=\"@style/CardTextStyle\"\r\n                    android:id=\"@+id/item_price\"/>\r\n\r\n            </LinearLayout>\r\n\r\n            <Button\r\n                android:layout_marginHorizontal=\"10dp\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:id=\"@+id/item_left_button\"/>\r\n\r\n        </LinearLayout>\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"0dp\"\r\n            android:layout_weight=\"1\"\r\n            android:layout_height=\"match_parent\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <TextView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"0dp\"\r\n                android:layout_weight=\"5\"\r\n                style=\"@style/CardTextStyle\"\r\n                android:id=\"@+id/item_time\"/>\r\n\r\n            <Button\r\n                android:layout_marginHorizontal=\"10dp\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:id=\"@+id/item_right_button\"/>\r\n\r\n        </LinearLayout>\r\n\r\n    </LinearLayout>\r\n\r\n</androidx.cardview.widget.CardView>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/item_post_recycler.xml	(revision 06fa09f441b387cbc7de5d44807cc8b41945364f)
++++ app/src/main/res/layout/item_post_recycler.xml	(date 1608432235505)
+@@ -1,80 +1,98 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<androidx.cardview.widget.CardView android:padding="5dp"
+-    app:cardCornerRadius="10dp"
+-    app:cardElevation="5dp"
+-    android:layout_margin="10dp"
+-    xmlns:android="http://schemas.android.com/apk/res/android"
++<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+-    xmlns:app="http://schemas.android.com/apk/res-auto">
++    android:layout_margin="10dp"
++    android:padding="5dp"
++    app:cardCornerRadius="10dp"
++    app:cardElevation="5dp">
+ 
+     <LinearLayout
+-        android:padding="5dp"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        android:orientation="horizontal">
++        android:orientation="horizontal"
++        android:padding="5dp">
+ 
+         <LinearLayout
+             android:layout_width="0dp"
+-            android:layout_weight="1"
+             android:layout_height="wrap_content"
++            android:layout_weight="1"
+             android:orientation="vertical">
+ 
+             <LinearLayout
+                 android:layout_width="match_parent"
+-                android:layout_weight="5"
+                 android:layout_height="0dp"
++                android:layout_weight="5"
+                 android:orientation="vertical">
+ 
+                 <TextView
++                    android:id="@+id/item_type"
++                    style="@style/CardTextStyle"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+-                    style="@style/CardTextStyle"
+-                    android:id="@+id/item_type"/>
++                    android:textSize="15dp"
++                    android:textStyle="bold"
++                    tools:text="Программирование" />
++
+                 <TextView
++                    android:id="@+id/item_subject"
++                    style="@style/CardTextStyle"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
++                    tools:text="Иванов" />
++
++                <TextView
++                    android:id="@+id/item_name"
+                     style="@style/CardTextStyle"
+-                    android:id="@+id/item_subject"/>
+-                <TextView
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+-                    style="@style/CardTextStyle"
+-                    android:id="@+id/item_name"/>
++                    tools:text="item_name" />
++
+                 <TextView
++                    android:id="@+id/item_price"
++                    style="@style/CardTextStyle"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+-                    style="@style/CardTextStyle"
+-                    android:id="@+id/item_price"/>
++                    tools:text="item_price" />
+ 
+             </LinearLayout>
+ 
+             <Button
+-                android:layout_marginHorizontal="10dp"
++                android:id="@+id/item_left_button"
+                 android:layout_width="match_parent"
+-                android:layout_height="wrap_content"
+-                android:id="@+id/item_left_button"/>
++                android:layout_height="40dp"
++                android:layout_margin="5dp"
++                android:background="@color/colorAccept"
++                android:textSize="12sp"
++                tools:text="Записаться" />
+ 
+         </LinearLayout>
+ 
+         <LinearLayout
+             android:layout_width="0dp"
++            android:layout_height="match_parent"
+             android:layout_weight="1"
+-            android:layout_height="match_parent"
+             android:orientation="vertical">
+ 
+             <TextView
++                android:id="@+id/item_time"
++                style="@style/CardTextStyle"
+                 android:layout_width="match_parent"
+                 android:layout_height="0dp"
+                 android:layout_weight="5"
+-                style="@style/CardTextStyle"
+-                android:id="@+id/item_time"/>
++                tools:text="Время" />
+ 
+             <Button
+-                android:layout_marginHorizontal="10dp"
++                android:id="@+id/item_right_button"
+                 android:layout_width="match_parent"
+-                android:layout_height="wrap_content"
+-                android:id="@+id/item_right_button"/>
++                android:layout_height="40dp"
++                android:layout_margin="5dp"
++                android:textSize="12sp"
++                android:layout_marginHorizontal="10dp"
++                android:background="@color/colorInfo"
++                tools:text="Подробнее" />
+ 
+         </LinearLayout>
+ 
+Index: app/src/main/res/layout/fragment_profile.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".ui.menu.profile.ProfileFragment\">\r\n\r\n\r\n    <ImageView\r\n        android:id=\"@+id/ivProfileAvatar\"\r\n        android:layout_width=\"120dp\"\r\n        android:layout_height=\"120dp\"\r\n        android:layout_marginStart=\"@dimen/marginProfile\"\r\n        android:layout_marginTop=\"@dimen/marginProfile\"\r\n        android:background=\"@drawable/ic_profile\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TableLayout\r\n        android:id=\"@+id/tlProfile\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"0dp\"\r\n        android:layout_marginStart=\"40dp\"\r\n        android:layout_marginTop=\"30dp\"\r\n        android:layout_marginEnd=\"@dimen/marginProfile\"\r\n        android:stretchColumns=\"true\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/ivProfileAvatar\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/ivProfileAvatar\"\r\n        app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n        <TableRow\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"0dp\"\r\n            android:layout_weight=\"1\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/tvProfileFirstName\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"match_parent\"\r\n                android:gravity=\"start|center\"\r\n                android:textSize=\"@dimen/h3\"\r\n                tools:text=\"Вася\" />\r\n\r\n        </TableRow>\r\n\r\n        <TableRow\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"0dp\"\r\n            android:layout_weight=\"1\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/tvProfileLastName\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"match_parent\"\r\n                android:gravity=\"start|center\"\r\n\r\n                android:textSize=\"@dimen/h3\"\r\n                tools:text=\"Пупкин\" />\r\n        </TableRow>\r\n\r\n        <TableRow\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"0dp\"\r\n            android:layout_weight=\"1\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/tvProfileEmail\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"match_parent\"\r\n                android:ellipsize=\"end\"\r\n                android:gravity=\"start|center\"\r\n                android:maxWidth=\"230dp\"\r\n                android:textSize=\"@dimen/h3\"\r\n                tools:text=\"sds@ya.ru\" />\r\n        </TableRow>\r\n    </TableLayout>\r\n\r\n    <Button\r\n        android:id=\"@+id/btnProfileRole\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"5dp\"\r\n        android:padding=\"0dp\"\r\n        android:text=\"Ученик\"\r\n        android:textAllCaps=\"false\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/ivProfileAvatar\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/ivProfileAvatar\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/ivProfileAvatar\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/btnProfileSelectTopic\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"@dimen/marginProfile\"\r\n        android:layout_marginEnd=\"@dimen/marginProfile\"\r\n        android:text=\"@string/SelectSubject\"\r\n        android:textAllCaps=\"false\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/btnProfileRole\" />\r\n\r\n    <ListView\r\n        android:id=\"@+id/lvProfileListTime\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"0dp\"\r\n        android:layout_margin=\"@dimen/marginProfile\"\r\n        android:background=\"#DFDFDF\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/btnProfileSelectTime\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/btnProfileSelectTopic\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/btnProfileSelectTime\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"@dimen/marginProfile\"\r\n        android:layout_marginEnd=\"@dimen/marginProfile\"\r\n        android:layout_marginBottom=\"@dimen/marginProfile\"\r\n        android:text=\"Выбрать время\"\r\n        android:textAllCaps=\"false\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\" />\r\n\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_profile.xml	(revision 06fa09f441b387cbc7de5d44807cc8b41945364f)
++++ app/src/main/res/layout/fragment_profile.xml	(date 1608430860703)
+@@ -13,7 +13,7 @@
+         android:layout_height="120dp"
+         android:layout_marginStart="@dimen/marginProfile"
+         android:layout_marginTop="@dimen/marginProfile"
+-        android:background="@drawable/ic_profile"
++        android:background="@drawable/ic_avatar"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+@@ -101,16 +101,30 @@
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/btnProfileRole" />
+ 
+-    <ListView
+-        android:id="@+id/lvProfileListTime"
++    <FrameLayout
++        android:id="@+id/flProfileListTime"
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_margin="@dimen/marginProfile"
+-        android:background="#DFDFDF"
++        android:background="#DADADA"
+         app:layout_constraintBottom_toTopOf="@+id/btnProfileSelectTime"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toBottomOf="@+id/btnProfileSelectTopic" />
++        app:layout_constraintTop_toBottomOf="@+id/btnProfileSelectTopic">
++
++        <ImageView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_gravity="center"
++            android:background="@drawable/ic_baseline_access_time_24"
++            />
++
++        <ListView
++            android:id="@+id/lvProfileListTime"
++            android:layout_width="match_parent"
++            android:layout_height="match_parent"
++            />
++    </FrameLayout>
+ 
+     <Button
+         android:id="@+id/btnProfileSelectTime"
+Index: app/src/main/res/layout/fragment_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:layout_margin=\"10dp\"\r\n    tools:context=\".ui.login.LoginActivity\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView2\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"top|center\"\r\n        android:layout_marginTop=\"5dp\"\r\n        android:text=\"@string/textAuthorization\"\r\n        android:textSize=\"@dimen/h2\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n\r\n    <EditText\r\n        android:id=\"@+id/etAuthName\"\r\n        style=\"@style/myEditText\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"60dp\"\r\n        android:ems=\"10\"\r\n        android:hint=\"@string/textEmail\"\r\n        android:inputType=\"textPersonName\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView2\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/etAuthPass\"\r\n        style=\"@style/myEditText\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:ems=\"10\"\r\n        android:hint=\"Пароль\"\r\n        android:inputType=\"textPassword\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/etAuthName\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/btnLogin\"\r\n        style=\"@style/myButtonAccept\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"end\"\r\n        android:layout_weight=\"1.5\"\r\n        android:layout_marginTop=\"15dp\"\r\n        android:text=\"@string/textLogIn\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/etAuthPass\"\r\n        android:textAllCaps=\"false\" />\r\n\r\n    <LinearLayout\r\n        android:id=\"@+id/linear_layout_btn\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"horizontal\"\r\n        android:padding=\"0dp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/btnLogin\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/btnRepass\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_weight=\"1\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:gravity=\"center\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:clickable=\"true\"\r\n            android:padding=\"5dp\"\r\n            android:text=\"@string/textRePass\"\r\n            android:textAllCaps=\"false\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintHorizontal_bias=\"0.501\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toBottomOf=\"@+id/linear_layout_btn\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/btnLogup\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_weight=\"1\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:gravity=\"center\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:clickable=\"true\"\r\n            android:padding=\"5dp\"\r\n            android:text=\"@string/textInRegistration\"\r\n            android:textAllCaps=\"false\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintHorizontal_bias=\"0.501\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toBottomOf=\"@+id/btnRepass\" />\r\n\r\n    </LinearLayout>\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_login.xml	(revision 06fa09f441b387cbc7de5d44807cc8b41945364f)
++++ app/src/main/res/layout/fragment_login.xml	(date 1608431645966)
+@@ -7,17 +7,26 @@
+     android:layout_margin="10dp"
+     tools:context=".ui.login.LoginActivity">
+ 
++    <ImageView
++        android:id="@+id/imageView"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:background="@mipmap/ic_logo_app"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent" />
++
+     <TextView
+         android:id="@+id/textView2"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="top|center"
+-        android:layout_marginTop="5dp"
+         android:text="@string/textAuthorization"
+         android:textSize="@dimen/h2"
++        android:layout_margin="10dp"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent" />
++        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+ 
+ 
+     <EditText
+@@ -25,7 +34,7 @@
+         style="@style/myEditText"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        android:layout_marginTop="60dp"
++        android:layout_marginTop="30dp"
+         android:ems="10"
+         android:hint="@string/textEmail"
+         android:inputType="textPersonName"
+Index: app/src/main/res/values/styles.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <!-- Base application theme. -->\r\n    <style name=\"AppTheme\" parent=\"Theme.AppCompat.Light.DarkActionBar\">\r\n        <!-- Customize your theme here. -->\r\n        <item name=\"colorPrimary\">@color/colorPrimary</item>\r\n        <item name=\"colorPrimaryDark\">@color/colorPrimaryDark</item>\r\n        <item name=\"colorAccent\">@color/colorAccent</item>\r\n    </style>\r\n\r\n    <style name=\"myEditText\">\r\n        <item name=\"android:background\"> @drawable/style_edit_text</item>\r\n        <item name=\"android:paddingStart\">  10dp</item>\r\n        <item name=\"android:paddingTop\">    10dp</item>\r\n        <item name=\"android:paddingBottom\"> 10dp</item>\r\n        <item name=\"android:paddingEnd\">    10dp</item>\r\n        <item name=\"android:layout_marginTop\">      10dp</item>\r\n        <item name=\"android:layout_marginBottom\">   10dp</item>\r\n    </style>\r\n\r\n    <style name=\"myButtonAccept\">\r\n        <!--<item name=\"android:background\">@color/colorPrimaryLight</item>-->\r\n    </style>\r\n\r\n    <style name=\"SplashTheme\" parent=\"Theme.AppCompat.Light.DarkActionBar\">\r\n        <!--todo: сменить splash image-->\r\n        <item name=\"android:windowBackground\">@drawable/splash_screen</item>\r\n\r\n    </style>\r\n\r\n    <style name=\"CardTextStyle\">\r\n        <item name=\"android:textSize\">16sp</item>\r\n        <item name=\"android:padding\">5dp</item>\r\n    </style>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/styles.xml	(revision 06fa09f441b387cbc7de5d44807cc8b41945364f)
++++ app/src/main/res/values/styles.xml	(date 1608432235495)
+@@ -28,7 +28,7 @@
+     </style>
+ 
+     <style name="CardTextStyle">
+-        <item name="android:textSize">16sp</item>
++        <item name="android:textSize">12sp</item>
+         <item name="android:padding">5dp</item>
+     </style>
+ </resources>
+\ No newline at end of file
