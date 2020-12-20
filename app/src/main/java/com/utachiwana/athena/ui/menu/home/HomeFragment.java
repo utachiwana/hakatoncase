@@ -28,6 +28,7 @@ import com.utachiwana.athena.ui.menu.MenuPresenter;
 import com.utachiwana.athena.ui.menu.MenuView;
 
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -68,6 +69,10 @@ public class HomeFragment extends Fragment implements MenuView, PostClickListene
 
     @Override
     public void showPosts(List<Post> data) {
+        int maxSize = getResources().getStringArray(R.array.subjects).length;
+        for (int i = 0; i < data.size(); i++) {
+            data.get(i).setSubject(getResources().getStringArray(R.array.subjects)[new Random().nextInt(maxSize)]);
+        }
         mAdapter.addData(data, true);
         hideLoading();
         mRecycler.setVisibility(View.VISIBLE);
@@ -96,9 +101,7 @@ public class HomeFragment extends Fragment implements MenuView, PostClickListene
     public void signUpClicked(Post post) {
 
 
-
         //todo убрать
-
 
 
         NetworkUtils.getApi().newFreeTime("пн", "14:00-15:00").enqueue(new Callback<JsonObject>() {
@@ -107,8 +110,7 @@ public class HomeFragment extends Fragment implements MenuView, PostClickListene
                 Log.d("______", "onResponse: " + response.code());
                 if (response.isSuccessful()) {
                     Toast.makeText(getContext(), "Успешно", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
 
                 }
             }

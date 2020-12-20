@@ -4,6 +4,7 @@
     android:layout_width="wrap_content"
     android:paddingVertical="10dp"
     android:paddingHorizontal="30dp"
+    android:layout_marginVertical="100dp"
     android:layout_height="wrap_content">
 
     <TextView
@@ -26,7 +27,24 @@
         android:layout_height="0dp"
         android:layout_weight="5"/>
 
+    <TextView
+        android:paddingHorizontal="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:text="@string/putcontacts"
+        android:layout_gravity="center"/>
+
+    <EditText
+        android:paddingHorizontal="5dp"
+        android:singleLine="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"/>
+
     <Button
+        android:id="@+id/signup_button"
         android:layout_marginVertical="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -38,7 +38,7 @@
             <TextView
                 android:layout_marginBottom="5dp"
                 android:id="@+id/details_author"
-                style="@style/CardTextStyle"
+                android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp" />
@@ -46,7 +46,7 @@
             <TextView
                 android:layout_marginBottom="5dp"
                 android:id="@+id/details_time"
-                style="@style/CardTextStyle"
+                android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp" />
@@ -62,7 +62,7 @@
             <TextView
                 android:layout_marginBottom="5dp"
                 android:id="@+id/details_text"
-                style="@style/CardTextStyle"
+                android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp" />

@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.gson.JsonObject;
 import com.utachiwana.athena.AthenaApp;
+import com.utachiwana.athena.DataGenerator;
 import com.utachiwana.athena.R;
 import com.utachiwana.athena.data.Prefs;
 import com.utachiwana.athena.data.User;
@@ -44,7 +45,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        ActionBar actionBar = ((LoginActivity)getActivity()).getSupportActionBar();
+        ActionBar actionBar = ((LoginActivity) getActivity()).getSupportActionBar();
         actionBar.setHomeButtonEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(false);
         Button loginButton = view.findViewById(R.id.btnLogin);
@@ -62,14 +63,14 @@ public class LoginFragment extends Fragment {
                 NetworkUtils.getApi().authorization(name, pass).enqueue(new Callback<JsonObject>() {
                     @Override
                     public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                        Log.d("______", "onResponse: " + response.code());
                         /*if (response.isSuccessful()) {
                             // TODO: 19.12.2020 входим в приложение
                             //putExtrta
-                            Prefs.setToken(response.body().get("token").toString());
                             NetworkUtils.setClient();*/
-                            startActivity(new Intent(getActivity(), MenuActivity.class));
-                            getActivity().finish();
+                        Intent intent = new Intent(requireActivity(), MenuActivity.class);
+                        intent.putExtra("profile", DataGenerator.getProfileData());
+                        startActivity(intent);
+                        requireActivity().finish();
                         /*} else {
                             // TODO: 19.12.2020 ошибка с сервера
                         }*/

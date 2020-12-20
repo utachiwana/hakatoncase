@@ -18,15 +18,14 @@ import java.util.List;
 public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.SubjectsViewHolder> {
 
 
-    List<Integer> listId = new ArrayList<Integer>();
+    List<Integer> listId = new ArrayList<>();
     int lenghtArray;
 
     public SubjectsAdapter(List<Integer> listId, int lenghtArray) {
-        if (listId != null){
+        if (listId != null) {
             this.listId.addAll(listId);
         }
         this.lenghtArray = lenghtArray;
-        Log.d("TAG", "SubjectsAdapter: lenghtArray: " + lenghtArray);
     }
 
     @NonNull
@@ -56,15 +55,13 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.Subjec
         }
 
         public void bind() {
-//            mTime.setText(post.getTime());
             mCheckBox.setText(itemView.getResources().getStringArray(R.array.subjects)[getAdapterPosition()]);
-            Log.d("TAG", "bind: " + itemView.getResources().getStringArray(R.array.subjects)[getAdapterPosition()]);
             mCheckBox.setChecked(listId.contains(getAdapterPosition()));
             mCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if (isChecked && listId.contains(getAdapterPosition())) {
+                if (isChecked && !listId.contains(getAdapterPosition())) {
                     listId.add(getAdapterPosition());
-                } else {
-                    listId.remove(getAdapterPosition());
+                } else if (!isChecked && listId.contains(getAdapterPosition())) {
+                    listId.remove(Integer.valueOf(getAdapterPosition()));
                 }
             });
         }

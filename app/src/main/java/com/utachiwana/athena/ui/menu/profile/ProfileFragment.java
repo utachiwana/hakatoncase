@@ -3,6 +3,7 @@ package com.utachiwana.athena.ui.menu.profile;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.utachiwana.athena.R;
 
 public class ProfileFragment extends Fragment {
@@ -46,9 +49,11 @@ public class ProfileFragment extends Fragment {
         listTime = (ListView) view.findViewById(R.id.lvProfileListTime);
 
         // TODO: 19.12.2020 инициализация данных пользователя
-        textFirstName.setText("Вася");
-        textLastName.setText("Пупкин");
-        textEmail.setText("vasa@ya.ru");
+        JsonObject obj = new Gson().fromJson(getArguments().getString("data"), JsonObject.class);
+        textFirstName.setText(obj.get("name").getAsString());
+        textLastName.setText(obj.get("lastname").getAsString());
+        textEmail.setText(obj.get("email").getAsString());
+        btnRole.setText(obj.get("role").getAsString());
         myRole = -1;
 
         btnSelectTopic.setOnClickListener(new View.OnClickListener() {

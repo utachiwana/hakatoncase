@@ -50,7 +50,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     public static class PostViewHolder extends RecyclerView.ViewHolder {
 
-        TextView mType, mAuthor, mTime, mSubject, mPrice;
+        TextView mType, mAuthor, mSubject, mPrice;
         Button rightBtn, leftBtn;
 
         public PostViewHolder(@NonNull View itemView) {
@@ -59,7 +59,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             mAuthor = itemView.findViewById(R.id.item_name);
             mPrice = itemView.findViewById(R.id.item_price);
             mSubject = itemView.findViewById(R.id.item_subject);
-            mTime = itemView.findViewById(R.id.item_time);
             rightBtn = itemView.findViewById(R.id.item_right_button);
             leftBtn = itemView.findViewById(R.id.item_left_button);
             rightBtn.setText(R.string.moredetails);
@@ -67,7 +66,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
 
         public void bind(Post post, PostClickListener listener) {
-            mTime.setText(post.getTime());
             mSubject.setText(post.getSubject());
             mPrice.setText(post.getPrice());
             mAuthor.setText(post.getAuthor());
