@@ -146,16 +146,21 @@ public class ProfileFragment extends Fragment implements FreeTimeClickedListener
 
     @Override
     public void loadFreeTimes() {
-        List<String> list = new ArrayList<>();
+        try {
+            List<String> list = new ArrayList<>();
 /*        for (JsonElement el : data.get("time").getAsJsonArray()) {
             list.add(el.getAsString());
         }*/
-        Gson gson = new Gson();
-        for (JsonElement el : gson.fromJson(DataGenerator.getTimeArray(), JsonArray.class)) {
-            list.add(el.getAsString());
+            Gson gson = new Gson();
+            for (JsonElement el : gson.fromJson(DataGenerator.getTimeArray(), JsonArray.class)) {
+                list.add(el.getAsString());
+            }
+            mAdapter.addData(list, true);
+            mRecycler.setAdapter(mAdapter);
+        } catch (Exception e){
+            mRecycler.setVisibility(View.INVISIBLE);
+            noFreeTime.setVisibility(View.VISIBLE);
         }
-        mAdapter.addData(list, true);
-        mRecycler.setAdapter(mAdapter);
     }
 
 }

@@ -44,9 +44,11 @@ public class DataGenerator {
 
     public static String getTimeArray() {
         JsonArray el = new JsonArray();
-        for (int i = 0; i < new Random().nextInt(5) + 1; i++) {
-            el.add("Вторник " + generateTime() + " - " + generateTime());
-        }
-        return el.toString();
+        if (new Random().nextBoolean()) {
+            for (int i = 0; i < new Random().nextInt(5) + 1; i++) {
+                el.add("Вторник " + generateTime() + " - " + generateTime());
+            }
+            return el.toString();
+        } else return null;
     }
 }

@@ -100,9 +100,9 @@ public class SelectTimeDialog extends DialogFragment {
 
         mSignUpBtn.setOnClickListener(v -> {
             int valuePickerHH1 = pickerHH1.getValue();
-            int valuePickerMM1 = pickerMM1.getValue();
+            String valuePickerMM1 = min[pickerMM1.getValue()];
             int valuePickerHH2 = pickerHH2.getValue();
-            int valuePickerMM2 = pickerMM2.getValue();
+            String valuePickerMM2 = min[pickerMM2.getValue()];
 
             String startTime = pickerHH1.getValue() + ":" + pickerMM1.getValue() + "-";
             String endTime = pickerHH2.getValue() + ":" + pickerMM2.getValue() + "-";
@@ -113,7 +113,7 @@ public class SelectTimeDialog extends DialogFragment {
                 public void onResponse(Call<String> call, Response<String> response) {
                     if (response.isSuccessful()) {
                         Toast.makeText(getContext(), "Успешно", Toast.LENGTH_SHORT).show();
-                        listener.addFreeTime(String.format(Locale.US, "%s %02d:%02d - %02d:%02d",day, valuePickerHH1,valuePickerMM1,valuePickerHH2,valuePickerMM2));
+                        listener.addFreeTime(String.format(Locale.US, "%s %02d:%s - %02d:%s",day, valuePickerHH1,valuePickerMM1,valuePickerHH2,valuePickerMM2));
                         dismiss();
                     } else {
                         Toast.makeText(getContext(), getResources().getString(R.string.loading_error), Toast.LENGTH_SHORT).show();
