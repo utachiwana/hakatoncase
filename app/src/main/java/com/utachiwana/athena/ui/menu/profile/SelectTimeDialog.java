@@ -70,24 +70,16 @@ public class SelectTimeDialog extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-//        mSignUpBtn.setEnabled(false);
-        pickerHH1.setMinValue(0);
-        pickerHH1.setMaxValue(23);
-        pickerMM1.setMinValue(0);
-        pickerMM1.setMaxValue(59);
-
-        pickerHH2.setMinValue(0);
-        pickerHH2.setMaxValue(23);
-        pickerMM2.setMinValue(0);
-        pickerMM2.setMaxValue(59);
-
-        String[] hours = getResources().getStringArray(R.array.hours);
-        String[] min = new String[60];
-        for (int i = 0; i < 60; i++) {
-            min[i] = String.valueOf(i);
+        String[] hours = new String[24];
+        for (int i = 0; i < 24; i++) {
+            hours[i] = i + "";
         }
+        String[] min = new String[]{"0", "30"};
 
+        pickerHH1.setMaxValue(hours.length-1);
+        pickerHH2.setMaxValue(hours.length-1);
+        pickerMM1.setMaxValue(min.length-1);
+        pickerMM2.setMaxValue(min.length-1);
         pickerHH1.setDisplayedValues(hours);
         pickerMM1.setDisplayedValues(min);
         pickerHH2.setDisplayedValues(hours);
