@@ -87,6 +87,8 @@
 
     </ScrollView>
     <Button
+        android:onClick="signUpClicked"
+        style="@style/myButtonAccept"
         android:layout_margin="5dp"
         android:id="@+id/details_signup_button"
         android:layout_width="match_parent"

@@ -8,7 +8,7 @@
     android:layout_marginTop="5dp"
     android:layout_marginEnd="5dp"
     android:gravity="start|center"
-    android:padding="15dp"
-    android:paddingStart="30dp"
-    android:text="CheckBox" />
+    android:padding="10dp"
+    android:buttonTint="@color/colorPrimary"
+    android:paddingStart="30dp"/>
 

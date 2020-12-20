@@ -33,13 +33,13 @@
         <item>Моделирование</item>
     </string-array>
     <string-array name="dayWeek">
-        <item>понедельник</item>
-        <item>вторник</item>
-        <item>среда</item>
-        <item>четверг</item>
-        <item>пятница</item>
-        <item>суббота</item>
-        <item>воскресенье</item>
+        <item>Понедельник</item>
+        <item>Вторник</item>
+        <item>Среда</item>
+        <item>Четверг</item>
+        <item>Пятница</item>
+        <item>Суббота</item>
+        <item>Воскресенье</item>
     </string-array>
 
     <string-array name="arrayRoles">
@@ -60,4 +60,9 @@
     <string name="page">Страница</string>
     <string name="textAdd">Добавить</string>
     <string name="sentrequest">Запрос отправлен</string>
+    <string name="addtime">Добавить время</string>
+    <string name="remove">Удалить</string>
+    <string name="cancel">Отмена</string>
+    <string name="confirmdelete">Подтвердите удаление</string>
+    <string name="confirmdeletedescription">Вы действительно хотите удалить выбранное время?</string>
 </resources>

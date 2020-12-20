@@ -1,5 +1,7 @@
 package com.utachiwana.athena;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.utachiwana.athena.data.Post;
 
@@ -38,5 +40,13 @@ public class DataGenerator {
         obj.addProperty("email", "vasyatopshmot@mail.ru");
         obj.addProperty("role", "Ученик");
         return obj.toString();
+    }
+
+    public static String getTimeArray() {
+        JsonArray el = new JsonArray();
+        for (int i = 0; i < new Random().nextInt(5) + 1; i++) {
+            el.add("Вторник " + generateTime() + " - " + generateTime());
+        }
+        return el.toString();
     }
 }

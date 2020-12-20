@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment implements MenuView, PostClickListene
     TextView mErrorView, currentPageText;
     SwipeRefreshLayout mRefreshLayout;
     ImageView rightArr, leftArr;
-    int currentPage = 1;
+    int currentPage;
 
     @Nullable
     @Override
@@ -65,6 +65,7 @@ public class HomeFragment extends Fragment implements MenuView, PostClickListene
         mRecycler.setAdapter(mAdapter);
         mRefreshLayout.setOnRefreshListener(() -> mRefreshLayout.post(this::loadPosts));
         mPresenter = new MenuPresenter(this);
+        currentPage = 1;
         currentPageText.setText(getResources().getString(R.string.page) + " " + currentPage);
 
         leftArr.setVisibility(View.INVISIBLE);

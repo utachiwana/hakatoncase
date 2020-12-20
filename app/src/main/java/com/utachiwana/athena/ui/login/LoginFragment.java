@@ -65,6 +65,7 @@ public class LoginFragment extends Fragment {
                     public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                         if (response.isSuccessful()) {
                             // TODO: 19.12.2020 входим в приложение
+                            Log.d("________", "onResponse: " + response.body().toString());
                             Prefs.setToken(response.body().get("token").toString());
                             Intent intent = new Intent(requireActivity(), MenuActivity.class);
                             intent.putExtra("profile", DataGenerator.getProfileData());

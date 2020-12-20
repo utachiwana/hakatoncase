@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,11 +42,10 @@ public class DialogTopicFragment extends DialogFragment {
 
         btnCancel.setOnClickListener(v -> getDialog().cancel());
 
-        btnAccept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: 19.12.2020 отправить массив айдишников на сервер
-            }
+        btnAccept.setOnClickListener(v -> {
+            // TODO: 19.12.2020 отправить массив айдишников на сервер
+            dismiss();
+            Toast.makeText(getContext(), getResources().getString(R.string.successfully), Toast.LENGTH_SHORT).show();
         });
         return view;
     }

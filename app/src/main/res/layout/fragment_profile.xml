@@ -23,31 +23,30 @@
         android:layout_marginStart="40dp"
         android:layout_marginEnd="@dimen/marginProfile"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/ivProfileAvatar"
+        app:layout_constraintBottom_toBottomOf="@+id/btnProfileRole"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivProfileAvatar"
         app:layout_constraintTop_toTopOf="@+id/ivProfileAvatar">
 
         <TextView
-            android:maxLines="1"
             android:id="@+id/tvProfileFirstName"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="start|center"
-            android:textSize="@dimen/h3"/>
+            android:maxLines="1"
+            android:textSize="@dimen/h3" />
 
         <TextView
-            android:maxLines="1"
             android:id="@+id/tvProfileLastName"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="start|center"
+            android:maxLines="1"
             android:textSize="@dimen/h3" />
 
         <TextView
-            android:maxLines="1"
             android:id="@+id/tvProfileEmail"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -55,10 +54,12 @@
             android:ellipsize="end"
             android:gravity="start|center"
             android:maxWidth="230dp"
-            android:textSize="@dimen/h3"/>
+            android:maxLines="1"
+            android:textSize="@dimen/h3" />
     </LinearLayout>
 
     <Button
+        style="@style/myButtonAcceptRadius"
         android:id="@+id/btnProfileRole"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -70,6 +71,8 @@
         app:layout_constraintTop_toBottomOf="@+id/ivProfileAvatar" />
 
     <Button
+        android:layout_marginTop="10dp"
+        style="@style/myButtonAcceptRadius"
         android:id="@+id/btnProfileSelectTopic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -85,7 +88,8 @@
         android:id="@+id/flProfileListTime"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/marginProfile"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="20dp"
         android:background="#DADADA"
         app:layout_constraintBottom_toTopOf="@+id/btnProfileSelectTime"
         app:layout_constraintEnd_toEndOf="parent"
@@ -93,27 +97,30 @@
         app:layout_constraintTop_toBottomOf="@+id/btnProfileSelectTopic">
 
         <ImageView
+            android:id="@+id/no_free_time_image"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/ic_baseline_access_time_24"
             />
 
-        <ListView
-            android:id="@+id/lvProfileListTime"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/profile_time_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
     </FrameLayout>
 
     <Button
+        style="@style/myButtonAcceptRadius"
         android:id="@+id/btnProfileSelectTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/marginProfile"
         android:layout_marginEnd="@dimen/marginProfile"
         android:layout_marginBottom="@dimen/marginProfile"
-        android:text="Выбрать время"
+        android:text="@string/addtime"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

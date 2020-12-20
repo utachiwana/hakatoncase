@@ -20,6 +20,7 @@ import com.utachiwana.athena.R;
 import com.utachiwana.athena.data.Prefs;
 import com.utachiwana.athena.network.NetworkUtils;
 import com.utachiwana.athena.ui.logic.DateAdapter;
+import com.utachiwana.athena.ui.logic.FreeTimeClickedListener;
 import com.utachiwana.athena.ui.logic.TimeAdapter;
 import com.utachiwana.athena.ui.logic.TimeSelectedListener;
 
@@ -27,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +36,11 @@ import retrofit2.Response;
 
 public class SelectTimeDialog extends DialogFragment {
 
+    FreeTimeClickedListener listener;
+
+    public SelectTimeDialog(FreeTimeClickedListener listener) {
+        this.listener = listener;
+    }
 
     Spinner mSpinner;
     /*TimeAdapter mAdapter;
@@ -72,14 +79,14 @@ public class SelectTimeDialog extends DialogFragment {
 
         String[] hours = new String[24];
         for (int i = 0; i < 24; i++) {
-            hours[i] = i + "";
+            hours[i] = String.format(Locale.US, "%02d", i);
         }
-        String[] min = new String[]{"0", "30"};
+        String[] min = new String[]{"00", "30"};
 
-        pickerHH1.setMaxValue(hours.length-1);
-        pickerHH2.setMaxValue(hours.length-1);
-        pickerMM1.setMaxValue(min.length-1);
-        pickerMM2.setMaxValue(min.length-1);
+        pickerHH1.setMaxValue(hours.length - 1);
+        pickerHH2.setMaxValue(hours.length - 1);
+        pickerMM1.setMaxValue(min.length - 1);
+        pickerMM2.setMaxValue(min.length - 1);
         pickerHH1.setDisplayedValues(hours);
         pickerMM1.setDisplayedValues(min);
         pickerHH2.setDisplayedValues(hours);
@@ -92,19 +99,21 @@ public class SelectTimeDialog extends DialogFragment {
         mSpinner.setAdapter(dateAdapter);
 
         mSignUpBtn.setOnClickListener(v -> {
-         /*   int valuePickerHH1 = pickerHH1.getValue();
+            int valuePickerHH1 = pickerHH1.getValue();
             int valuePickerMM1 = pickerMM1.getValue();
             int valuePickerHH2 = pickerHH2.getValue();
-            int valuePickerMM2 = pickerMM2.getValue();*/
+            int valuePickerMM2 = pickerMM2.getValue();
 
             String startTime = pickerHH1.getValue() + ":" + pickerMM1.getValue() + "-";
-            String startEnd = pickerHH2.getValue() + ":" + pickerMM2.getValue() + "-";
+            String endTime = pickerHH2.getValue() + ":" + pickerMM2.getValue() + "-";
+            String day = dateAdapter.getItem(mSpinner.getSelectedItemPosition());
 
-            NetworkUtils.getApi().newFreeTime(Prefs.getToken(), dateAdapter.getItem(mSpinner.getSelectedItemPosition()), startTime, startEnd).enqueue(new Callback<String>() {
+            NetworkUtils.getApi().newFreeTime(Prefs.getToken(), day, startTime, endTime).enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
                     if (response.isSuccessful()) {
                         Toast.makeText(getContext(), "Успешно", Toast.LENGTH_SHORT).show();
+                        listener.addFreeTime(String.format(Locale.US, "%s %02d:%02d - %02d:%02d",day, valuePickerHH1,valuePickerMM1,valuePickerHH2,valuePickerMM2));
                         dismiss();
                     } else {
                         Toast.makeText(getContext(), getResources().getString(R.string.loading_error), Toast.LENGTH_SHORT).show();

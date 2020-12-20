@@ -21,6 +21,7 @@
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <LinearLayout
+            android:background="@color/colorPrimary"
             android:paddingHorizontal="30dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -40,6 +41,7 @@
                 android:id="@+id/current_page_text"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:textColor="@android:color/white"
                 android:textSize="18sp"
                 android:layout_height="match_parent"/>
 
