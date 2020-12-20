@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +23,6 @@ import com.utachiwana.athena.data.Post;
 import com.utachiwana.athena.network.NetworkUtils;
 import com.utachiwana.athena.ui.logic.PostAdapter;
 import com.utachiwana.athena.ui.logic.PostClickListener;
-import com.utachiwana.athena.ui.menu.MenuActivity;
 import com.utachiwana.athena.ui.menu.MenuPresenter;
 import com.utachiwana.athena.ui.menu.MenuView;
 
@@ -39,8 +38,10 @@ public class HomeFragment extends Fragment implements MenuView, PostClickListene
     RecyclerView mRecycler;
     PostAdapter mAdapter;
     MenuPresenter mPresenter;
-    TextView mErrorView;
+    TextView mErrorView, currentPageText;
     SwipeRefreshLayout mRefreshLayout;
+    ImageView rightArr, leftArr;
+    int currentPage = 1;
 
     @Nullable
     @Override
@@ -49,6 +50,9 @@ public class HomeFragment extends Fragment implements MenuView, PostClickListene
         mRecycler = view.findViewById(R.id.post_recycler);
         mRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         mErrorView = view.findViewById(R.id.error_view);
+        rightArr = view.findViewById(R.id.next_page);
+        leftArr = view.findViewById(R.id.prev_page);
+        currentPageText = view.findViewById(R.id.current_page_text);
         return view;
     }
 
@@ -60,10 +64,31 @@ public class HomeFragment extends Fragment implements MenuView, PostClickListene
         mRecycler.setAdapter(mAdapter);
         mRefreshLayout.setOnRefreshListener(() -> mRefreshLayout.post(this::loadPosts));
         mPresenter = new MenuPresenter(this);
+        currentPageText.setText(getResources().getString(R.string.page) + " " + currentPage);
+
+        leftArr.setVisibility(View.INVISIBLE);
+        leftArr.setEnabled(false);
+        rightArr.setOnClickListener(v -> {
+            currentPage++;
+            mRefreshLayout.post(this::loadPosts);
+            if (!leftArr.isEnabled()) {
+                leftArr.setVisibility(View.VISIBLE);
+                leftArr.setEnabled(true);
+            }
+        });
+        leftArr.setOnClickListener(v -> {
+            currentPage--;
+            mRefreshLayout.post(this::loadPosts);
+            if (currentPage == 1) {
+                leftArr.setVisibility(View.INVISIBLE);
+                leftArr.setEnabled(false);
+            }
+        });
         loadPosts();
     }
 
     private void loadPosts() {
+        currentPageText.setText(getResources().getString(R.string.page) + " " + currentPage);
         mPresenter.loadPosts(false, false, true);
     }
 

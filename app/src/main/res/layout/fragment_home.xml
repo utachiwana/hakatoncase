@@ -21,10 +21,35 @@
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <LinearLayout
+            android:paddingHorizontal="30dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal">
+
+            <ImageView
+                android:padding="3dp"
+                android:id="@+id/prev_page"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_leftarr"/>
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/current_page_text"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:layout_height="match_parent"/>
+
+            <ImageView
+                android:padding="3dp"
+                android:id="@+id/next_page"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_rightarr"/>
 
         </LinearLayout>
     </LinearLayout>
