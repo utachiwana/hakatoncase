@@ -24,21 +24,10 @@ public interface NetworkApi {
     Call<JsonObject> authorization(@Query("email") String email, @Query("password") String pass);
 
     @GET("time/make")
-    Call<JsonObject> newFreeTime(@Query("day") String day, @Query("time") String time);
+    Call<String> newFreeTime(@Query("token") String token,
+                                  @Query("day") String day,
+                                  @Query("timeStart") String timeStart,
+                                  @Query("timeEnd") String timeEnd);
 
-    @GET("entries")
-    Call<List<Post>> getPosts(@Query("filters") Boolean... args);
-
-    @GET("entry")
-    JsonObject getEntry(@Query("entry_id") String id);
-
-    @GET("my_entries")
-    JsonObject getMyEntries(@Query("user_id") String user_id);
-
-    @GET("delete_entry")
-    JsonObject deleteEntry(@Query("entry_id") String entry_id);
-
-    @GET("chat")
-    JsonObject getChat(@Query("user_id") String user_id, @Query("guest_id") String guest_id);
 
 }

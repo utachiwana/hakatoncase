@@ -20,6 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.gson.JsonObject;
 import com.utachiwana.athena.R;
 import com.utachiwana.athena.data.Post;
+import com.utachiwana.athena.data.Prefs;
 import com.utachiwana.athena.network.NetworkUtils;
 import com.utachiwana.athena.ui.logic.PostAdapter;
 import com.utachiwana.athena.ui.logic.PostClickListener;
@@ -125,24 +126,6 @@ public class HomeFragment extends Fragment implements MenuView, PostClickListene
     @Override
     public void signUpClicked(Post post) {
 
-
-        //todo убрать
-
-
-        NetworkUtils.getApi().newFreeTime("пн", "14:00-15:00").enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(getContext(), "Успешно", Toast.LENGTH_SHORT).show();
-                } else {
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-            }
-        });
         SignUpDialog dialog = new SignUpDialog();
         Bundle bundle = new Bundle();
         bundle.putStringArray("time", post.getTime().split("\n"));

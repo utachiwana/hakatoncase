@@ -30,11 +30,6 @@ public class NetworkUtils {
     public static OkHttpClient getClient() {
         if (mClient == null) {
             mClient = new OkHttpClient();
-            mClient.newBuilder().addInterceptor(chain -> {
-                Log.d("_______", "intercept: ");
-                Request request = chain.request().newBuilder().addHeader(USER_ID, Prefs.getToken()).build();
-                return chain.proceed(request);
-            }).build();
         }
         return mClient;
     }

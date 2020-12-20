@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.utachiwana.athena.R;
+import com.utachiwana.athena.data.Prefs;
+import com.utachiwana.athena.network.NetworkUtils;
 import com.utachiwana.athena.ui.logic.DateAdapter;
 import com.utachiwana.athena.ui.logic.TimeAdapter;
 import com.utachiwana.athena.ui.logic.TimeSelectedListener;
@@ -24,6 +27,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SelectTimeDialog extends DialogFragment {
 
@@ -36,6 +43,7 @@ public class SelectTimeDialog extends DialogFragment {
     NumberPicker pickerMM1;
     NumberPicker pickerHH2;
     NumberPicker pickerMM2;
+    DateAdapter dateAdapter;
 
     @Nullable
     @Override
@@ -55,16 +63,6 @@ public class SelectTimeDialog extends DialogFragment {
         //***
         mSignUpBtn = view.findViewById(R.id.signup_button);
 
-        mSignUpBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int valuePickerHH1 = pickerHH1.getValue();
-                int valuePickerMM1 = pickerMM1.getValue();
-                int valuePickerHH2 = pickerHH2.getValue();
-                int valuePickerMM2 = pickerMM2.getValue();
-
-            }
-        });
         return view;
     }
 
@@ -97,11 +95,36 @@ public class SelectTimeDialog extends DialogFragment {
 
 
         String[] dates = getResources().getStringArray(R.array.dayWeek);
-        DateAdapter adapter = new DateAdapter(getContext(), R.layout.item_spinner, R.id.date_spinner, dates);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinner.setAdapter(adapter);
+        dateAdapter = new DateAdapter(getContext(), R.layout.item_spinner, R.id.date_spinner, dates);
+        dateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner.setAdapter(dateAdapter);
 
+        mSignUpBtn.setOnClickListener(v -> {
+         /*   int valuePickerHH1 = pickerHH1.getValue();
+            int valuePickerMM1 = pickerMM1.getValue();
+            int valuePickerHH2 = pickerHH2.getValue();
+            int valuePickerMM2 = pickerMM2.getValue();*/
 
+            String startTime = pickerHH1.getValue() + ":" + pickerMM1.getValue() + "-";
+            String startEnd = pickerHH2.getValue() + ":" + pickerMM2.getValue() + "-";
+
+            NetworkUtils.getApi().newFreeTime(Prefs.getToken(), dateAdapter.getItem(mSpinner.getSelectedItemPosition()), startTime, startEnd).enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getContext(), "Успешно", Toast.LENGTH_SHORT).show();
+                        dismiss();
+                    } else {
+                        Toast.makeText(getContext(), getResources().getString(R.string.loading_error), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    Toast.makeText(getContext(), getResources().getString(R.string.loading_error), Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
 
 /*        double duration = Double.parseDouble(getArguments().getString("duration").split(" ")[0]);
         Integer startHour = Integer.parseInt(dates[0].split(" ")[1].split(":")[0]);

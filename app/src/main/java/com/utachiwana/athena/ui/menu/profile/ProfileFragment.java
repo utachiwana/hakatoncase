@@ -57,57 +57,37 @@ public class ProfileFragment extends Fragment {
         btnRole.setText(obj.get("role").getAsString());
         myRole = -1;
 
-        btnSelectTopic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogTopicFragment = new DialogTopicFragment();
-                dialogTopicFragment.show(requireActivity().getSupportFragmentManager(), "1");
-            }
+        btnSelectTopic.setOnClickListener(v -> {
+            dialogTopicFragment = new DialogTopicFragment();
+            dialogTopicFragment.show(requireActivity().getSupportFragmentManager(), "1");
         });
 
-        btnRole.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String[] arrayRoles = getResources().getStringArray(R.array.arrayRoles);
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Хотите сменить роль?")
-                        // добавляем переключатели
-                        .setSingleChoiceItems(arrayRoles, 0/*// TODO: тут инициализируется роль */,
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int item) {
-                                        //смена роли
-                                        //Toast.makeText(getActivity(), "Выбрана роль: " + arrayRoles[item], Toast.LENGTH_SHORT).show();
-                                    }
-                                })
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                // User clicked OK, so save the mSelectedItems results somewhere
-                                // or return them to the component that opened the dialog
-                                // TODO: 19.12.2020 смена роли
+        btnRole.setOnClickListener(v -> {
+            final String[] arrayRoles = getResources().getStringArray(R.array.arrayRoles);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Хотите сменить роль?")
+                    // добавляем переключатели
+                    .setSingleChoiceItems(arrayRoles, 0/*// TODO: тут инициализируется роль */,
+                            (dialog, item) -> {
+                                //смена роли
+                                //Toast.makeText(getActivity(), "Выбрана роль: " + arrayRoles[item], Toast.LENGTH_SHORT).show();
+                            })
+                    .setPositiveButton("OK", (dialog, id) -> {
+                        // User clicked OK, so save the mSelectedItems results somewhere
+                        // or return them to the component that opened the dialog
+                        // TODO: 19.12.2020 смена роли
 
-                                Toast.makeText(getActivity(), "Ваша роль", Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        }).create().show();
-            }
+                        Toast.makeText(getActivity(), "Ваша роль", Toast.LENGTH_LONG).show();
+                    })
+                    .setNegativeButton("Отмена", (dialog, id) -> dialog.cancel()).create().show();
         });
 
 
-        btnSelectTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SelectTimeDialog dialog = new SelectTimeDialog();
-                Bundle bundle = new Bundle();
-                dialog.setArguments(bundle);
-                dialog.show(requireActivity().getSupportFragmentManager(), null);
-            }
+        btnSelectTime.setOnClickListener(v -> {
+            SelectTimeDialog dialog = new SelectTimeDialog();
+            Bundle bundle = new Bundle();
+            dialog.setArguments(bundle);
+            dialog.show(requireActivity().getSupportFragmentManager(), null);
         });
         return view;
     }

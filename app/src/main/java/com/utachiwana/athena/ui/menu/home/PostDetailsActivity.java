@@ -3,6 +3,7 @@ package com.utachiwana.athena.ui.menu.home;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -37,5 +38,15 @@ public class PostDetailsActivity extends AppCompatActivity {
         mPrice.setText(getResources().getString(R.string.price) + ": " + post.getPrice());
         mSubject.setText(getResources().getString(R.string.subject) + ": " + post.getSubject());
         mText.setText(getResources().getString(R.string.description) + ": " + post.getText());
+    }
+
+    public void signUpClicked(View view) {
+        Post post = (Post) getIntent().getSerializableExtra("data");
+        SignUpDialog dialog = new SignUpDialog();
+        Bundle bundle = new Bundle();
+        bundle.putStringArray("time", post.getTime().split("\n"));
+        bundle.putString("duration", post.getDuration());
+        dialog.setArguments(bundle);
+        dialog.show(getSupportFragmentManager(), null);
     }
 }

@@ -63,17 +63,16 @@ public class LoginFragment extends Fragment {
                 NetworkUtils.getApi().authorization(name, pass).enqueue(new Callback<JsonObject>() {
                     @Override
                     public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                        /*if (response.isSuccessful()) {
+                        if (response.isSuccessful()) {
                             // TODO: 19.12.2020 входим в приложение
-                            //putExtrta
-                            NetworkUtils.setClient();*/
-                        Intent intent = new Intent(requireActivity(), MenuActivity.class);
-                        intent.putExtra("profile", DataGenerator.getProfileData());
-                        startActivity(intent);
-                        requireActivity().finish();
-                        /*} else {
+                            Prefs.setToken(response.body().get("token").toString());
+                            Intent intent = new Intent(requireActivity(), MenuActivity.class);
+                            intent.putExtra("profile", DataGenerator.getProfileData());
+                            startActivity(intent);
+                            requireActivity().finish();
+                        } else {
                             // TODO: 19.12.2020 ошибка с сервера
-                        }*/
+                        }
                     }
 
                     @Override

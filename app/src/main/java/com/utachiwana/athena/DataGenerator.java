@@ -20,8 +20,8 @@ public class DataGenerator {
             post.setForm("Без разницы");
             post.setDuration("1 час");
             post.setPrice("2000/занятие");
-            post.setTime("вторник " + generateTime() + " - " + generateTime() +
-                    "\nсреда " + generateTime() + " - " + generateTime());
+            post.setTime("Вторник " + generateTime() + " - " + generateTime() +
+                    "\nСреда " + generateTime() + " - " + generateTime());
             list.add(post);
         }
         return list;

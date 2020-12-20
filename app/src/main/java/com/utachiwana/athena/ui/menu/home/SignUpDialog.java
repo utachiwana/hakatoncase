@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -71,6 +72,12 @@ public class SignUpDialog extends DialogFragment implements TimeSelectedListener
         }
         mAdapter = new TimeAdapter(list, this);
         mRecycler.setAdapter(mAdapter);
+
+        mSignUpBtn.setOnClickListener(v -> {
+            //todo отправка создания запроса репетитору на сервер
+            dismiss();
+            Toast.makeText(getContext(), getResources().getString(R.string.sentrequest), Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override
