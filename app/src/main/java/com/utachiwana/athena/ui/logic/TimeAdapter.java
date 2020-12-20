@@ -54,7 +54,7 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.TimeViewHolder
         }
 
         public void bind() {
-            //itemView.setSelected(selectedItem == getAdapterPosition());
+            itemView.setSelected(selectedItem == getAdapterPosition());
             if (itemView.isSelected()) {
                 itemView.setBackgroundColor(itemView.getResources().getColor(R.color.colorPrimary));
             } else {

@@ -56,8 +56,8 @@ public class SignUpDialog extends DialogFragment implements TimeSelectedListener
         mSpinner.setAdapter(adapter);
 
         double duration = Double.parseDouble(getArguments().getString("duration").split(" ")[0]);
-        Integer startHour = Integer.parseInt(dates[0].split(" ")[1].split(":")[0]);
-        Integer endHour = Integer.parseInt(dates[0].split(" ")[3].split(":")[0]);
+        int startHour = Integer.parseInt(dates[0].split(" ")[1].split(":")[0]);
+        int endHour = Integer.parseInt(dates[0].split(" ")[3].split(":")[0]);
         Calendar cal = Calendar.getInstance();
         List<String> list = new ArrayList<>();
         SimpleDateFormat f = new SimpleDateFormat("HH:mm");
@@ -66,7 +66,7 @@ public class SignUpDialog extends DialogFragment implements TimeSelectedListener
             cal.set(Calendar.HOUR_OF_DAY, i);
             String str = f.format(cal.getTime());
             cal.set(Calendar.HOUR_OF_DAY, (int) (i + Math.floor(duration)));
-            str+= " - " + f.format(cal.getTime());
+            str += " - " + f.format(cal.getTime());
             list.add(str);
         }
         mAdapter = new TimeAdapter(list, this);

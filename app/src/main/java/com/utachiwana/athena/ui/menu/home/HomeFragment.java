@@ -132,7 +132,6 @@ public class HomeFragment extends Fragment implements MenuView, PostClickListene
         NetworkUtils.getApi().newFreeTime("пн", "14:00-15:00").enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.d("______", "onResponse: " + response.code());
                 if (response.isSuccessful()) {
                     Toast.makeText(getContext(), "Успешно", Toast.LENGTH_SHORT).show();
                 } else {
@@ -142,7 +141,6 @@ public class HomeFragment extends Fragment implements MenuView, PostClickListene
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d("_______", "onFailure: " + t.getMessage());
             }
         });
         SignUpDialog dialog = new SignUpDialog();
